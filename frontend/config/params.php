@@ -22,17 +22,150 @@ return [
         'RUNNING'=>'TA`MIRLANMOQDA',
         'COMPLETED'=>'YAKUNLANGAN',
     ],
-    'access_service'=>true,
+
+    'layout'=>[
+        'magazine'=>'Dokonlar uchun',
+        'detailing'=>'Avtomoshina tamirlash',
+        'forniture'=>'Mebel',
+    ],
     'price_type'=>[
         'SUM'=>'So`mda keladi va sotiladi',
         'RATE'=>'Valyutada keladi va konvert qilinadi'
     ],
-    'deposit.state'=>[
-        'PREPARE'=>'PREPARE', 'PAY'=>'PAY', 'VERIFY'=>'VERIFY', 'CHECK'=>'CHECK', 'DONE'=>'DONE'
+    'forniture_service_state'=>[
+        'NEW'=>'YANGI',
+        'CALC'=>'HISOBLANMOQDA',
+        'RUNNING'=>'BAJARILMOQDA',
+        'DONE'=>'TAYYOR',
+        'COMPLETED'=>'YETKAZIB BERILDI',
+        'CANCELED'=>'BEKOR QILINDI',
     ],
-    'payout.state'=>[
-        'NEW'=>'NEW',
-        'PAYOUTED'=>'PAYOUTED',
-        'CANCELED'=>'CANCELED',
-    ]
+    'worker'=>5,
+
+    'app'=>'detailing',
+    'access_layout'=>'detailing',
+    'access_service'=>'detailing',
+    'permissions'=>[
+        'detailing'=>[
+            'default'=>[
+                'all'=>true,
+            ],
+            'gen'=>[
+                'all'=>true,
+                'sale'=>true,
+                'income'=>true,
+                'returntosuppler'=>true,
+                'credit'=>true,
+            ],
+            'visit'=>[
+                'all'=>true,
+                'list'=>true,
+                'create'=>true,
+                'view'=>true,
+                'client-car'=>true,
+            ],
+            'client-car'=>[
+                'all'=>true,
+            ],
+            'sale'=>[
+                'all'=>true,
+                'index'=>true,
+                'credit'=>true,
+                'credittoday'=>true,
+                'credittodayview'=>true,
+                'view'=>true,
+            ],
+            'paid'=>[
+                'all'=>true,
+            ],
+            'suppler-paid'=>[
+                'all'=>true,
+            ],
+            'paid-other'=>[
+                'all'=>true,
+            ],
+            'come'=>[
+                'all'=>true,
+                'reminder'=>true,
+                'view'=>true,
+            ],
+            'goods'=>[
+                'all'=>true,
+                'index'=>true,
+                'view'=>true,
+                'update'=>true,
+                'create'=>true,
+            ],
+            'goods-group'=>[
+                'all'=>true,
+                'index'=>true,
+                'view'=>true,
+                'update'=>true,
+                'create'=>true,
+            ],
+            'service'=>[
+                'all'=>true,
+                'index'=>true,
+                'view'=>true,
+                'update'=>true,
+                'create'=>true,
+            ],
+            'service-group'=>[
+                'all'=>true,
+                'index'=>true,
+                'view'=>true,
+                'update'=>true,
+                'create'=>true,
+            ],
+            'client'=>[
+                'all'=>true,
+                'index'=>true,
+                'view'=>true,
+                'update'=>true,
+                'create'=>true,
+                'credit'=>true,
+                'debt'=>true,
+            ],
+            'client-type'=>[
+                'all'=>true,
+                'index'=>true,
+                'view'=>true,
+                'update'=>true,
+                'create'=>true,
+            ],
+            'suppler'=>[
+                'all'=>true,
+                'index'=>true,
+                'view'=>true,
+                'update'=>true,
+                'create'=>true,
+                'income'=>true,
+                'debt'=>true,
+                'credit'=>true,
+            ],
+            'suppler-return'=>[
+                'all'=>true,
+            ],
+            'user'=>[
+                'all'=>true,
+            ],
+            'setting'=>[
+                'all'=>true,
+            ],
+            'custom-type'=>[
+                'all'=>true,
+            ],
+            'forniture-service'=>[
+                'all'=>false,
+            ],
+            'forniture-service-order'=>[
+                'all'=>false,
+            ],
+            'forniture-service-order-item'=>[
+                'all'=>false,
+            ],
+        ],
+    ],
+
+
 ];

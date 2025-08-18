@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Sale;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -32,7 +33,7 @@ class SiteController extends Controller
 //                'only' => ['login', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['login'],
+                        'actions' => ['login','salednotprint'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],

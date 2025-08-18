@@ -15,23 +15,11 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
-            'enableCookieValidation' => false,
-            'enableCsrfValidation'   => false,
-            'baseUrl'=>'/api',
-            'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
-            ]
         ],
         'user' => [
-            'class' => yii\web\User::class,
-            'identityClass' => backend\models\User::class,
-            'loginUrl' => null,
+            'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'enableSession'=>false,
-            'identityCookie'=>['name'=>'_identity-backend','httpOnly'=>true],
-        ],
-        'authenticator' => [
-            'class' => \yii\filters\auth\HttpBearerAuth::class,
+            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -49,22 +37,14 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        'jwt' => [
-            'class' => 'backend\components\JwtCom',
-            'key' => 'sdfjlskdjgflkdsfhglkwejropkjsdlsdfsd2334213fds',
-        ],
-
+        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                'POST v1'=>'site/index',
-                'OPTIONS' => 'site/index',
-                'GET v1/octo'=>'site/octo',
-                'POST v1/notify'=>'site/notify',
             ],
-        ]
+        ],
+        */
     ],
     'params' => $params,
 ];

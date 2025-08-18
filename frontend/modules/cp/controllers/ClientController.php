@@ -3,14 +3,21 @@
 namespace frontend\modules\cp\controllers;
 
 use common\models\Client;
-use common\models\search\CardSearch;
+use common\models\ClientCar;
+use common\models\Paid;
+use common\models\PaidClient;
+use common\models\Sale;
+use common\models\search\ClientCarSearch;
 use common\models\search\ClientSearch;
-use common\models\search\PayoutSearch;
-use common\models\search\TransactionSearch;
-use common\models\search\WalletSearch;
+use common\models\search\VisitSearch;
+use frontend\components\Common;
+use Imagine\Image\ManipulatorInterface;
+use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
+use yii\web\UploadedFile;
 
 /**
  * ClientController implements the CRUD actions for Client model.
@@ -36,7 +43,7 @@ class ClientController extends Controller
     }
 
     /**
-     * Lists all Client models.
+     * Lists all client model.
      *
      * @return string
      */
@@ -46,8 +53,104 @@ class ClientController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+
+           'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionPaid($id)
+    {
+        $model = new Paid();
+        $model->register_id = Yii::$app->user->id;
+        $model->modify_id = Yii::$app->user->id;
+        $client = $this->findModel($id);
+        if($model->load($this->request->post())){
+            // create paid yaratish va client_paid yaratish va
+            // clientning balansidan kamaytirish sotilgan mahsulotdan kamaytirish
+            if($model->save()){
+
+             
+                $client->balans += $model->price;
+                $client->credit -= $model->price;
+                $client->debt += $model->price;
+                $client->save(false);
+
+                $client_paid = new PaidClient();
+                $client_paid->client_id = $client->id;
+                $client_paid->paid_id = $model->id;
+                $client_paid->save(false);
+
+                if($client->balans > 0){
+                    Common::ClientPaid($client->id);
+                }
+
+                \Yii::$app->session->setFlash('success','Muvoffaqiyatli saqlandi');
+                return $this->redirect(['view','id'=>$id]);
+            }
+        }
+
+        return $this->renderAjax('_paid',['model'=>$model]);
+
+    }
+
+
+    public function actionDebt()
+    {
+        $searchModel = new ClientSearch();
+        $searchModel->search_type = 'DEBT';
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCredit()
+    {
+        $searchModel = new ClientSearch();
+        $searchModel->search_type = 'CREDIT';
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAddcar($id)
+    {
+        $model = new ClientCar();
+        $model->client_id = $id;
+        if($model->load($this->request->post())){
+            $model->call_date = date('Y-m-d',strtotime($model->call_date));
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Amal muvaffaqiyatli bajarildi');
+            }else{
+                Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+            }
+            return $this->redirect(['view','id'=>$id]);
+        }
+        return $this->renderAjax('_addcar',[
+            'model'=>$model
+        ]);
+    }
+
+    public function actionUpdatecar($id)
+    {
+        $model = ClientCar::findOne($id);
+        if($model->load($this->request->post())){
+            $model->call_date = date('Y-m-d',strtotime($model->call_date));
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Amal muvaffaqiyatli bajarildi');
+            }else{
+                Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+            }
+            return $this->redirect(['view','id'=>$model->client_id]);
+        }
+        return $this->renderAjax('_addcar',[
+            'model'=>$model
         ]);
     }
 
@@ -59,33 +162,21 @@ class ClientController extends Controller
      */
     public function actionView($id)
     {
-        $searchDepositModel = new TransactionSearch();
-        $searchDepositModel->client_id = $id;
-        $dataDepositProvider = $searchDepositModel->search($this->request->queryParams);
+        $carSearchModel = new ClientCarSearch();
+        $carSearchModel->client_id = $id;
+        $carDataProvider = $carSearchModel->search($this->request->queryParams);
 
-        $searchPayoutModel = new PayoutSearch();
-        $searchPayoutModel->client_id = $id;
-        $dataPayoutProvider = $searchPayoutModel->search($this->request->queryParams);
+        $visitSearchModel = new VisitSearch();
+        $visitSearchModel->client_id = $id;
+        $visitDataProvider = $visitSearchModel->search($this->request->queryParams);
 
-
-        $searchWalletModel = new WalletSearch();
-        $searchWalletModel->client_id = $id;
-        $dataWalletProvider = $searchWalletModel->search($this->request->queryParams);
-
-        $searchCardModel = new CardSearch();
-        $searchCardModel->client_id = $id;
-        $dataCardProvider = $searchCardModel->search($this->request->queryParams);
 
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'searchDepositModel' => $searchDepositModel,
-            'dataDepositProvider' => $dataDepositProvider,
-            'searchPayoutModel' => $searchPayoutModel,
-            'dataPayoutProvider' => $dataPayoutProvider,
-            'searchWalletModel' => $searchWalletModel,
-            'dataWalletProvider' => $dataWalletProvider,
-            'searchCardModel' => $searchCardModel,
-            'dataCardProvider' => $dataCardProvider,
+            'carSearchModel' => $carSearchModel,
+            'carDataProvider' => $carDataProvider,
+            'visitSearchModel' => $visitSearchModel,
+            'visitDataProvider' => $visitDataProvider,
         ]);
     }
 
@@ -99,14 +190,38 @@ class ClientController extends Controller
         $model = new Client();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post()) ) {
+                if($model->image = UploadedFile::getInstance($model,'image')){
+                    $name = 'client/'.microtime(true).'.'.$model->image->extension;
+                    if(!is_dir(Yii::$app->basePath.'/web/upload/client/')){
+                        mkdir(Yii::$app->basePath.'/web/upload/client/',0777,true);
+                    }
+                    $model->image->saveAs(Yii::$app->basePath.'/web/upload/'.$name);
+                    $model->image = $name;
+
+                    Image::resize(Yii::$app->basePath.'/web/upload/'.$name, 1024,null,ManipulatorInterface::THUMBNAIL_INSET)
+                        ->save(Yii::$app->basePath.'/web/upload/'.$name, ['quality' => 70]);
+
+                }else{
+                    $model->image = 'default/avatar.png';
+                }
+                if($model->save()){
+                    Yii::$app->session->setFlash('success','Amal muvaffaqiyatli bajarildi');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }else{
+                    Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik. Iltimos qayta urinib ko`ring.');
+                    return $this->redirect(['index']);
+                }
+
+            }else{
+                Yii::$app->session->setFlash('error','Ma`lumotni qo`shishda xatolik. Iltimos qayta urinib ko`ring.');
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -121,12 +236,34 @@ class ClientController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $img = $model->image;
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            if($model->image = UploadedFile::getInstance($model,'image')){
+                $name = 'client/'.microtime(true).'.'.$model->image->extension;
+                if(!is_dir(Yii::$app->basePath.'/web/upload/client/')){
+                    mkdir(Yii::$app->basePath.'/web/upload/client/',0777,true);
+                }
+                $model->image->saveAs(Yii::$app->basePath.'/web/upload/'.$name);
+                $model->image = $name;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                Image::resize(Yii::$app->basePath.'/web/upload/'.$name, 1024,null,ManipulatorInterface::THUMBNAIL_INSET)
+                    ->save(Yii::$app->basePath.'/web/upload/'.$name, ['quality' => 70]);
+
+            }else{
+                $model->image = $img;
+            }
+
+
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Amal muvaffaqiyatli bajarildi');
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', 'Ma`lumotni o`zgartirishda xatolik. Iltimos qayta urinib ko`ring.');
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
@@ -140,8 +277,13 @@ class ClientController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->status = -1;
+        if($model->save()){
+            Yii::$app->session->setFlash('success','Amal muvaffaqiyatli bajarildi');
+        }else{
+            Yii::$app->session->setFlash('error','Ma`lumotni o`chirishda xatolik');
+        }
         return $this->redirect(['index']);
     }
 

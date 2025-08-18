@@ -19,11 +19,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'chat_id') ?>
+    <?= $form->field($model, 'phone') ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?= $form->field($model, 'phone_two') ?>
 
-    <?= $form->field($model, 'created') ?>
+    <?= $form->field($model, 'type_id') ?>
+
+    <?php // echo $form->field($model, 'comment') ?>
+
+    <?php // echo $form->field($model, 'balans') ?>
+
+    <?php // echo $form->field($model, 'credit') ?>
+
+    <?php // echo $form->field($model, 'debt') ?>
+
+    <?php // echo $form->field($model, 'status') ?>
+
+    <?php // echo $form->field($model, 'created') ?>
 
     <?php // echo $form->field($model, 'updated') ?>
 

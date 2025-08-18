@@ -1,0 +1,385 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="fixit">
+    <meta name="keywords" content="fixit">
+    <meta name="author" content="fixit">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="./img/favicon.png" type="image/x-icon">
+    <title>Fixit - Provider App</title>
+    <link rel="apple-touch-icon" href="./img/favicon.png">
+    <meta name="title-color" content="#00162E">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="fixit">
+    <meta name="msapplication-TileImage" content="./img/favicon.png">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!--Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+        rel="stylesheet">
+
+    <!-- swiper css -->
+    <link rel="stylesheet" type="text/css" href="./css/swiper-bundle.min.css">
+
+    <!-- iconsax css -->
+    <link rel="stylesheet" type="text/css" href="./css/iconsax.css">
+
+    <!-- bootstrap css -->
+    <link rel="stylesheet" id="rtl-link" type="text/css" href="./css/bootstrap.css">
+
+    <!-- Theme css -->
+    <link rel="stylesheet" id="change-link" type="text/css" href="./css/style.css">
+</head>
+
+<body>
+   
+
+    <!-- header start -->
+    <header class="header">
+        <div class="custom-container">
+            <div class="head-content">
+                <a href="#sidebar" class="sidebar-btn" data-bs-toggle="offcanvas">
+                    <i class="iconsax" data-icon="text-align-left"></i>
+                </a>
+                <div class="header-location">
+                    <img class="img-fluid profile-icon" src="./img/provider-vector-img.svg"
+                        alt="location">
+                    <div class="location-content">
+                        <h5>Hello, there !!</h5>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a href="chatting.html">
+                        <i class="iconsax icon-btn" data-icon="messages-2"></i>
+                    </a>
+                    <a href="notification.html">
+                        <i class="iconsax icon-btn notification-icon" data-icon="bell-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+
+    <!-- wallet balance section starts -->
+    <section class="section-lg-t-space">
+        <div class="custom-container">
+            <div class="wallet-balance-box">
+                <img class="img-fluid wallet-icon" src="./img/wallet-open.svg" alt="p8">
+                <div class="wallet-details">
+                    <div>
+                        <h5>Today’s wallet bal.</h5>
+                        <h4>$2,562.23</h4>
+                    </div>
+                    <a href="wallet.html" class="btn-sm theme-btn withdraw-btn theme-color">Withdraw</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- wallet balance section end -->
+
+    <!-- counter section starts -->
+    <section class="section-b-space">
+        <div class="custom-container">
+            <div class="row g-3">
+                <div class="col-7">
+                    <a href="earnings.html" class="provider-counter-box">
+                        <i class="iconsax counter-icon" data-icon="money-in"></i>
+                        <div class="provider-counter-details">
+                            <h6>Total Earning</h6>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <h4>$3,263.03</h4>
+                                <i class="iconsax arrow-icon" data-icon="arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-5">
+                    <a href="booking.html" class="provider-counter-box">
+                        <i class="iconsax counter-icon" data-icon="receipt-minus-1"></i>
+                        <div class="provider-counter-details">
+                            <h6>Total Booking</h6>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <h4>635</h4>
+                                <i class="iconsax arrow-icon" data-icon="arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-5">
+                    <a href="service-list.html" class="provider-counter-box">
+                        <i class="iconsax counter-icon" data-icon="box"></i>
+                        <div class="provider-counter-details">
+                            <h6>Total Service</h6>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <h4>35</h4>
+                                <i class="iconsax arrow-icon" data-icon="arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-7">
+                    <a href="servicemen-list.html" class="provider-counter-box">
+                        <i class="iconsax counter-icon" data-icon="grid-apps"></i>
+                        <div class="provider-counter-details">
+                            <h6>Total Servicemen</h6>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <h4>60</h4>
+                                <i class="iconsax arrow-icon" data-icon="arrow-right"></i>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- counter section end -->
+
+   
+    <!-- recent bookings section starts -->
+    <section class="box-background section-b-space">
+        <div class="custom-container">
+            <div class="title">
+                <h3>Recent Bookings</h3>
+                <a href="booking.html">View all</a>
+            </div>
+
+            <ul class="booking-list">
+                <li class="booking-box mt-0">
+                    <div class="booking-details">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="service-content">
+                                <h5 class="theme-color fw-medium mb-1">#58961</h5>
+                                <a href="pending-booking-details.html">
+                                    <h4 class="title-color fw-medium">Curtain Cleaning</h4>
+                                </a>
+                                <div class="d-flex align-items-center gap-2 mt-1">
+                                    <h3 class="title-color fw-bold ">$22.00</h3>
+                                    <h6 class="error-color fw-medium">(10% off)</h6>
+                                </div>
+                            </div>
+                            <div class="service-img">
+                                <img class="img-fluid img" src="../../assets/images/vertical-service/3.jpg" alt="1">
+                            </div>
+                        </div>
+                        <div class="line-box">
+                            <div class="dot1"></div>
+                            <div class="dot2"></div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-1">
+                            <h6 class="fw-medium content-color">Status</h6>
+                            <h6 class="booking-tag pending-bg">Pending</h6>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <h6 class="fw-medium content-color">Date & Time</h6>
+                            <h6 class="fw-medium title-color">6 Aug, 2024 - 5:20 pm</h6>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <h6 class="fw-medium content-color">Location</h6>
+                            <h6 class="fw-medium title-color">California - USA</h6>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <h6 class="fw-medium content-color">Receivable Amount</h6>
+                            <h6 class="fw-medium success-color">Not paid yet</h6>
+                        </div>
+
+                        <ul class="booking-provider-list">
+                            <li class="booking-provider-box">
+                                <div class="provider-image">
+                                    <img class="img-fluid provider-pic" src="../../assets/images/profile/p17.png"
+                                        alt="p17">
+                                </div>
+                                <div class="provider-content">
+                                    <div>
+                                        <h6 class="content-color fw-medium">Customer</h6>
+                                        <h5 class="name fw-medium title-color mt-1">Stella Milevski</h5>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="booking-provider-box">
+                                <div class="provider-image">
+                                    <img class="img-fluid provider-pic" src="../../assets/images/profile/p15.png"
+                                        alt="p17">
+                                </div>
+                                <div class="provider-content">
+                                    <div>
+                                        <h6 class="content-color fw-medium">Servicemen</h6>
+                                        <h5 class="name fw-medium title-color mt-1">Arlene McCoy</h5>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="d-flex align-items-center gap-3 mt-3">
+                            <a href="#!" class="btn btn-sm outline-btn w-50">Reject</a>
+                            <a href="booking.html" class="btn btn-sm theme-btn w-50">Accept</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="booking-box">
+                    <div class="booking-details">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="service-content">
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <h5 class="theme-color fw-medium">#58962</h5>
+                                </div>
+                                <a href="pending-booking-details.html">
+                                    <h4 class="title-color fw-medium">House Hold Cook</h4>
+                                </a>
+                                <div class="d-flex align-items-center gap-2 mt-1">
+                                    <h3 class="title-color fw-bold ">$20.00</h3>
+                                    <h6 class="error-color fw-medium">(10% off)</h6>
+                                </div>
+                            </div>
+                            <div class="service-img">
+                                <img class="img-fluid img" src="../../assets/images/vertical-service/4.jpg" alt="1">
+                            </div>
+                        </div>
+                        <div class="line-box">
+                            <div class="dot1"></div>
+                            <div class="dot2"></div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mt-1">
+                            <h6 class="fw-medium content-color">Status</h6>
+                            <h6 class="booking-tag pending-bg">Pending</h6>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <h6 class="fw-medium content-color">Date & Time</h6>
+                            <h6 class="fw-medium title-color">7 Aug, 2024 - 11:00 am</h6>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <h6 class="fw-medium content-color">Location</h6>
+                            <h6 class="fw-medium title-color">California - USA</h6>
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between mt-2">
+                            <h6 class="fw-medium content-color">Receivable Amount</h6>
+                            <h6 class="fw-medium success-color">Not paid yet</h6>
+                        </div>
+
+                        <ul class="booking-provider-list">
+                            <li class="booking-provider-box">
+                                <div class="provider-image">
+                                    <img class="img-fluid provider-pic" src="../../assets/images/profile/p13.png"
+                                        alt="p17">
+                                </div>
+
+                                <div class="provider-content">
+                                    <div>
+                                        <h6 class="content-color fw-medium">Customer</h6>
+                                        <h5 class="name fw-medium title-color mt-1">Kate Tanner</h5>
+                                    </div>
+                                    <h6 class="fw-normal title-color ps-2"><img
+                                            src="../../assets/images/svg/star-fill.svg" alt="star">
+                                        4.0</h6>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="d-flex align-items-center gap-3 mt-3">
+                            <a href="#!" class="btn btn-sm outline-btn w-50">Reject</a>
+                            <a href="booking.html" class="btn btn-sm theme-btn w-50">Accept</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!-- recent bookings section end -->
+
+    <!-- panel-space start -->
+    <div class="panel-space"></div>
+    <!-- panel-space end -->
+
+    <!-- bottom navbar start -->
+    <div class="navbar-menu">
+        <ul>
+            <li class="active">
+                <a href="home.html">
+                    <div class="icon">
+                        <img class="unactive" src="./img/home.svg" alt="home">
+                        <img class="active" src="./img/home-fill.svg" alt="home">
+                    </div>
+                    <h5 class="active">Home</h5>
+                </a>
+            </li>
+
+            <li>
+                <a href="booking.html">
+                    <div class="icon">
+                        <img class="unactive" src="./img/booking.svg" alt="booking">
+                        <img class="active" src="./img/booking-fill.svg" alt="booking">
+                    </div>
+                    <h5>Booking</h5>
+                </a>
+            </li>
+
+            <li>
+                <a href="#add-modal" class="scanner-btn" data-bs-toggle="modal">
+                    <i class="iconsax icon-btn" data-icon="add"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="wallet.html">
+                    <div class="icon">
+                        <img class="unactive" src="./img/wallet-open.svg" alt="wallet">
+                        <img class="active" src="./img/wallet-fill.svg" alt="wallet">
+                    </div>
+                    <h5>Wallet</h5>
+                </a>
+            </li>
+
+            <li>
+                <a href="profile.html">
+                    <div class="icon">
+                        <img class="unactive" src="./img/profile.svg" alt="profile">
+                        <img class="active" src="./img/profile-fill.svg" alt="profile">
+                    </div>
+                    <h5>Profile</h5>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- bottom navbar end -->
+
+
+    <!-- apexcharts js -->
+    <script src="./js/apexcharts.js"></script>
+    <script src="./js/custom-revenue-chart.js"></script>
+
+    <!-- swiperjs -->
+    <script src="./js/swiper-bundle.min.js"></script>
+    <script src="./js/custom-swiper.js"></script>
+
+    <!-- iconsax js -->
+    <script src="./js/iconsax.js"></script>
+
+    <!-- bootstrap js -->
+    <script src="./js/bootstrap.bundle.min.js"></script>
+
+    <!-- template-setting js -->
+    <script src="./template-setting.js"></script>
+
+    <!-- script js -->
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

@@ -11,14 +11,16 @@ use common\models\Client;
  */
 class ClientSearch extends Client
 {
+    public $search_type;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['name', 'chat_id', 'created', 'updated'], 'safe'],
+            [['id', 'type_id', 'status',], 'integer'],
+            [['name', 'phone', 'phone_two','search_type', 'comment', 'created', 'updated'], 'safe'],
+            [['balans', 'credit', 'debt'], 'number'],
         ];
     }
 
@@ -35,15 +37,12 @@ class ClientSearch extends Client
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     * @param string|null $formName Form name to be used into `->load()` method.
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $formName = null)
+    public function search($params)
     {
-        $query = Client::find()
-        ->select(['client.*','(select sum(price) from transaction where client.id=transaction.client_id and transaction.status = 1 and transaction.state = "DONE") as deposit','(select count(*) from payout where client.id = payout.client_id and status = 1 and state = "PAYOUTED") as payout'])
-        ->orderBy(['id'=>SORT_DESC]);
+        $query = Client::find()->orderBy(['id' => SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -51,24 +50,41 @@ class ClientSearch extends Client
             'query' => $query,
         ]);
 
-        $this->load($params, $formName);
+        $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
+        if($this->status == null){
+            $query->andWhere(['status'=>1]);
+        }
+
+        if($this->search_type == 'CREDIT'){
+            $query->andWhere(['<','balans',0]);
+        }
+
+        if($this->search_type == 'DEBT'){
+            $query->andWhere(['>','balans',0]);
+        }
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'type_id' => $this->type_id,
+            'balans' => $this->balans,
+            'credit' => $this->credit,
+            'debt' => $this->debt,
             'status' => $this->status,
             'created' => $this->created,
             'updated' => $this->updated,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'chat_id', $this->chat_id]);
+            ->andFilterWhere(['like', 'phone', $this->phone])
+            ->andFilterWhere(['like', 'phone_two', $this->phone_two])
+            ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;
     }

@@ -23,7 +23,24 @@ AppAsset::register($this);
         <?php $this->head() ?>
 
 
+        <style>
+            .pagination a, .pagination span {
+                text-decoration: none;
+                color: #000;
+                float: left;
+                padding: 8px 16px;
+            }
 
+            .pagination li.active a {
+                background-color: #4CAF50;
+                color: #FFF;
+                border-radius: 5px;
+            }
+            .pagination a:hover:not(.active) {
+                background-color: #DDD;
+                border-radius: 5px;
+            }
+        </style>
     </head>
     <body class="sidebar-light header-white">
     <?php $this->beginBody() ?>
@@ -42,7 +59,6 @@ AppAsset::register($this);
     <div class="main-container">
         <div class="pd-ltr-20 xs-pd-20-10">
             <div class="min-height-200px">
-                <?php if(Yii::$app->controller->id != 'site' and Yii::$app->controller->action->id != 'index'){?>
                 <div class="page-header">
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
@@ -56,7 +72,6 @@ AppAsset::register($this);
                         </div>
                     </div>
                 </div>
-    <?php }?>
                 <div class="mb-30">
                     <div class="pb-20">
 
@@ -66,13 +81,83 @@ AppAsset::register($this);
                 </div>
             </div>
             <div class="footer-wrap pd-20 mb-20 card-box">
-                OSONPAY - <a href="http://OSONPAY.MEDIA" target="_blank">OSONPAY.MEDIA</a> All rights reserved &copy;<?= date('Y')?>
+                DriveService.UZ - <a href="http://milliondastur.uz" target="_blank">Dilmurod Allabergenov</a> All rights reserved &copy;<?= date('Y')?>
             </div>
         </div>
 
     </div>
 
 
+    <div class="modal" id="md-modalcreate" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yangi ma'lumot qo'shish</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body md-modalcreate">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="md-modalupdate" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ma'lumotlarni yangilash</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body md-modalupdate">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <?php
+        $this->registerJs("
+            $('.md-btncreate').click(function(){
+                var val = $(this).val();
+                $('#md-modalcreate').modal('show').find('.modal-body.md-modalcreate').load(val);
+            });
+             $('.md-btnupdate').click(function(){
+                var val = $(this).val();
+                $('#md-modalupdate').modal('show').find('.modal-body.md-modalupdate').load(val);
+            })
+        ");
+    ?>
+
+    <?php
+    if(Yii::$app->session->hasFlash('error')){
+        $txt = Yii::$app->session->getFlash('error');
+        $this->registerJs("
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '{$txt}',
+        })
+    ");
+    }
+    if(Yii::$app->session->hasFlash('success')){
+        $txt = Yii::$app->session->getFlash('success');
+        $this->registerJs("
+        Swal.fire({
+          icon: 'success',
+          title: 'Good job!',
+          text: '{$txt}',
+        })
+    ");
+    }
+
+    ?>
 
     <?php $this->endBody() ?>
     </body>

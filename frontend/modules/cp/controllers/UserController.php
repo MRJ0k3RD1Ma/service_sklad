@@ -133,8 +133,8 @@ class UserController extends Controller
             }else{
                 $model->image = $img;
             }
-            if($model->password){
-                $model->password = $model->setPassword($model->password);
+            if($model->password != ""){
+                $model->setPassword($model->password);
             }else{
                 $model->password = $pas;
             }

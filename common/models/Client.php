@@ -9,17 +9,23 @@ use Yii;
  *
  * @property int $id
  * @property string $name
- * @property string $chat_id
+ * @property string|null $phone
+ * @property string|null $phone_two
+ * @property int $type_id
+ * @property string|null $comment
+ * @property float|null $balans
+ * @property float|null $credit
+ * @property float|null $debt
  * @property int|null $status
  * @property string|null $created
  * @property string|null $updated
  *
- * @property Wallet[] $wallets
+ * @property SaleCredit[] $saleCredits
+ * @property ClientCar[] $cars
+ * @property ClientType $type
  */
 class Client extends \yii\db\ActiveRecord
 {
-
-    public $deposit, $payout;
     /**
      * {@inheritdoc}
      */
@@ -34,11 +40,12 @@ class Client extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status'], 'default', 'value' => 1],
-            [['name', 'chat_id'], 'required'],
-            [['status'], 'integer'],
-            [['created', 'updated','deposit','payout'], 'safe'],
-            [['name', 'chat_id'], 'string', 'max' => 255],
+            [['name', 'type_id'], 'required'],
+            [['type_id', 'status'], 'integer'],
+            [['balans', 'credit', 'debt'], 'number'],
+            [['created', 'updated'], 'safe'],
+            [['name', 'phone', 'phone_two', 'comment','image'], 'string', 'max' => 255],
+            [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ClientType::class, 'targetAttribute' => ['type_id' => 'id']],
         ];
     }
 
@@ -50,21 +57,42 @@ class Client extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Nomi',
-            'chat_id' => 'Chat ID',
+            'phone' => 'Telefon',
+            'image' => 'Rasm',
+            'phone_two' => 'Qo`shimcha tel',
+            'type_id' => 'Turi',
+            'comment' => 'Izoh',
+            'balans' => 'Balans',
+            'credit' => 'Qarz',
+            'debt' => 'To`lov',
             'status' => 'Status',
-            'created' => 'Ro`yhatga olindi',
+            'created' => 'Kiritildi',
             'updated' => 'O`zgartirildi',
         ];
     }
 
     /**
-     * Gets query for [[Wallets]].
+     * Gets query for [[SaleCredits]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getWallets()
+    public function getSaleCredits()
     {
-        return $this->hasMany(Wallet::class, ['client_id' => 'id']);
+        return $this->hasMany(SaleCredit::class, ['client_id' => 'id']);
     }
 
+    public function getCars()
+    {
+        return $this->hasMany(ClientCar::class,['client_id'=>'id']);
+    }
+
+    /**
+     * Gets query for [[Type]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getType()
+    {
+        return $this->hasOne(ClientType::class, ['id' => 'type_id']);
+    }
 }
