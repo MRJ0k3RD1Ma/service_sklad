@@ -195,13 +195,7 @@ class Paid extends \yii\db\ActiveRecord
 
     public function getTopProductsData(){
 
-        $saleProducts = SaleProduct::find()->select(['sale_product.*','round(sum(sale_product.cnt)) as topcount'])
-            ->innerJoin('sale', 'sale.id = sale_product.sale_id and sale.status = 1')
-            ->andFilterWhere(['like','sale.created',date('Y-m-')])
-            ->groupBy(['sale_product.product_id'])
-            ->orderBy(['topcount' => SORT_DESC])
-            ->limit(20)->all();
-
+        $saleProducts = [];
         $data = [];
         foreach ($saleProducts as $item){
             $data[] = [

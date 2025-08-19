@@ -4,7 +4,7 @@ $this->registerJsFile('@web/design/src/plugins/apexcharts/apexcharts.min.js', ['
 $this->registerCssFile('@web/design/src/plugins/apexcharts/apexcharts.min.css', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
-<?php $cnt = \common\models\Visit::find()->where(['status'=>1,'state'=>'COMPLETED','is_print'=>0])->count('*');
+<?php $cnt = 0;
 
 if($cnt > 0){?>
 <div class="row pb-10">
@@ -61,8 +61,7 @@ if($cnt > 0){?>
                 <div class="widget-data">
                     <div class="weight-700 font-24 text-dark">
                         <?php
-                        $sale = \common\models\Sale::find()->innerJoin('sale_credit','sale_credit.sale_id = sale.id')
-                            ->andWhere(['sale_credit.status'=>1,'sale.status'=>1,'sale_credit.call_date'=>date('Y-m-d')])->sum('sale.credit');
+                        $sale = 0;
                         echo number_format(round($sale,0),0,'.',' ');
                         ?> so'm
                     </div>
@@ -85,8 +84,7 @@ if($cnt > 0){?>
                 <div class="widget-data">
                     <div class="weight-700 font-24 text-dark">
                         <?php
-                            $sale = \common\models\Sale::find()->innerJoin('sale_credit','sale_credit.sale_id = sale.id')
-                                ->andWhere(['sale_credit.status'=>1,'sale.status'=>1])->sum('sale.credit');
+                            $sale = 0;
                             echo number_format(round($sale,0),0,'.',' ');
                         ?> so'm
                     </div>
@@ -122,23 +120,7 @@ if($cnt > 0){?>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $sale = \common\models\Sale::find()->select(['sale.*','sale_credit.client_id as creditor'])->innerJoin('sale_credit','sale_credit.sale_id = sale.id')
-                            ->andWhere(['sale_credit.status'=>1,'sale.status'=>1,'sale_credit.call_date'=>date('Y-m-d')])->limit(10)->all();
-                        foreach($sale as $key=>$s):
-                            $client = \common\models\Client::findOne(['id'=>$s->creditor]);
-                        ?>
-                            <tr>
-                                <td><?= $key+1 ?></td>
-                                <td><?= @$client->name ?></td>
-                                <td><?= @$client->phone ?></td>
-                                <td>
-                                    <a href="<?= Yii::$app->urlManager->createUrl(['/cp/sale/view','id'=>$s->id])?>"><?php
-                                        echo number_format(round($s->credit,0),0,'.',' ');
-                                        ?> so'm</a>
-                                </td>
-                            </tr>
-                        <?php endforeach;?>
+
                     </tbody>
                 </table>
             </div>
@@ -154,9 +136,7 @@ if($cnt > 0){?>
                     <i class="fa fa-calendar" aria-hidden="true"></i>
                 </div>
                 <div class="font-14 text-right">
-                    <div> <?= number_format(\common\models\Visit::find()->where(['status'=>1])
-                            ->andFilterWhere(['like','date',date('Y-m-',strtotime(date('Y-m-d').' -1 month'))])
-                            ->count('id'),0,'.',' ')?>
+                    <div>0
                     </div>
                     <div class="font-12">O'tgan oyda</div>
                 </div>
@@ -165,9 +145,8 @@ if($cnt > 0){?>
                 <div class="text-white">
                     <div class="font-14">Tashriflar soni</div>
                     <div class="font-24 weight-500">
-                        <?= number_format(\common\models\Visit::find()->where(['status'=>1])
-                            ->andFilterWhere(['like','date',date('Y-m-')])
-                            ->count('id'),0,'.',' ')?></div>
+                        0
+                    </div>
                 </div>
 
             </div>
@@ -178,17 +157,14 @@ if($cnt > 0){?>
                     <i class="fa fa-stethoscope" aria-hidden="true"></i>
                 </div>
                 <div class="font-14 text-right">
-                    <div> <?= number_format(\common\models\Sale::find()
-                            ->where(['status'=>1])
-                            ->andFilterWhere(['like','created',date('Y-m-',strtotime(date('Y-m-d').' -1 month'))])
-                            ->count('id'),0,'.',' ')?></div>
+                    <div> <?= number_format(0,0,'.',' ')?></div>
                     <div class="font-12">O'tgan oyda</div>
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-end">
                 <div class="text-white">
                     <div class="font-14">Sotuvlar soni</div>
-                    <div class="font-24 weight-500"><?= number_format(\common\models\Sale::find()->where(['status'=>1])->andFilterWhere(['like','created',date('Y-m')])->count('id'),0,'.',' ')?></div>
+                    <div class="font-24 weight-500"><?= number_format(0,0,'.',' ')?></div>
                 </div>
 
             </div>
