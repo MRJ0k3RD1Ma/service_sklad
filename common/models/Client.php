@@ -20,8 +20,6 @@ use Yii;
  * @property string|null $created
  * @property string|null $updated
  *
- * @property SaleCredit[] $saleCredits
- * @property ClientCar[] $cars
  * @property ClientType $type
  */
 class Client extends \yii\db\ActiveRecord
@@ -41,7 +39,7 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'type_id'], 'required'],
-            [['type_id', 'status'], 'integer'],
+            [['type_id', 'status','register_id','modify_id'], 'integer'],
             [['balans', 'credit', 'debt'], 'number'],
             [['created', 'updated'], 'safe'],
             [['name', 'phone', 'phone_two', 'comment','image'], 'string', 'max' => 255],
@@ -68,23 +66,12 @@ class Client extends \yii\db\ActiveRecord
             'status' => 'Status',
             'created' => 'Kiritildi',
             'updated' => 'O`zgartirildi',
+            'register_id'=>'Register',
+            'modify_id'=>'O`zgartirdi',
         ];
     }
 
-    /**
-     * Gets query for [[SaleCredits]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSaleCredits()
-    {
-        return $this->hasMany(SaleCredit::class, ['client_id' => 'id']);
-    }
 
-    public function getCars()
-    {
-        return $this->hasMany(ClientCar::class,['client_id'=>'id']);
-    }
 
     /**
      * Gets query for [[Type]].
@@ -95,4 +82,15 @@ class Client extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ClientType::class, ['id' => 'type_id']);
     }
+
+    public function getRegister()
+    {
+        return $this->hasOne(User::class, ['id' => 'register_id']);
+    }
+
+    public function getModify(){
+        return $this->hasOne(User::class, ['id' => 'modify_id']);
+    }
+
+
 }

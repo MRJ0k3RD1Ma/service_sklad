@@ -32,7 +32,8 @@ class GoodsGroup extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['status'], 'integer'],
-            [['name', 'image'], 'string', 'max' => 255],
+            [['register_id','modify_id'],'integer'],
+            [['name', 'image','type',], 'string', 'max' => 255],
         ];
     }
 
@@ -46,6 +47,8 @@ class GoodsGroup extends \yii\db\ActiveRecord
             'name' => 'Nomi',
             'status' => 'Status',
             'image' => 'Rasm',
+            'register_id' => 'Register',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 
@@ -57,5 +60,13 @@ class GoodsGroup extends \yii\db\ActiveRecord
     public function getGoods()
     {
         return $this->hasMany(Goods::class, ['group_id' => 'id']);
+    }
+    public function getRegister()
+    {
+        return $this->hasOne(User::class, ['id' => 'register_id']);
+    }
+
+    public function getModify(){
+        return $this->hasOne(User::class, ['id' => 'modify_id']);
     }
 }

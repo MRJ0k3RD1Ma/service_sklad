@@ -29,6 +29,8 @@ class Payment extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 255],
+            [['created','updated'],'safe'],
+            [['status','register_id','modify_id'],'integer'],
         ];
     }
 
@@ -40,6 +42,11 @@ class Payment extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Turi',
+            'created' => 'Kiritildi',
+            'updated' => 'O`zgartirildi',
+            'status' => 'Status',
+            'register_id' => 'Register',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 
@@ -52,4 +59,14 @@ class Payment extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Paid::class, ['payment_id' => 'id']);
     }
+
+    public function getRegister()
+    {
+        return $this->hasOne(User::class, ['id' => 'register_id']);
+    }
+
+    public function getModify(){
+        return $this->hasOne(User::class, ['id' => 'modify_id']);
+    }
+
 }

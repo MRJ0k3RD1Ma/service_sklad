@@ -48,7 +48,6 @@ class Paid extends \yii\db\ActiveRecord
             [['modify_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modify_id' => 'id']],
             [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::class, 'targetAttribute' => ['payment_id' => 'id']],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['register_id' => 'id']],
-            [['sale_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sale::class, 'targetAttribute' => ['sale_id' => 'id']],
         ];
     }
 
@@ -107,15 +106,6 @@ class Paid extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getSale()
-    {
-        return $this->hasOne(Sale::class, ['id' => 'sale_id']);
-    }
-
-    public function getPaidClient()
-    {
-        return $this->hasMany(PaidClient::class, ['paid_id' => 'id']);
-    }
 
     public function getClient()
     {
@@ -143,38 +133,6 @@ class Paid extends \yii\db\ActiveRecord
         return array_values($data);
     }
 
-//    public function getYearlyData($year){
-//
-//        $query = self::find()
-//            ->select(["DATE(date) as day", "SUM(price) as total"])
-//            ->where(["YEAR(date)" => $year])
-//            ->groupBy(["DATE(date)"])
-//            ->asArray()
-//            ->all();
-//
-//        $data = [];
-//        $start = new \DateTime("$year-01-01");
-//        $end = new \DateTime("$year-12-31");
-//
-//        while ($start <= $end) {
-//            $data[$start->format('Y-m-d')] = 0;
-//            $start->modify('+1 day');
-//        }
-//
-//        foreach ($query as $row) {
-//            $data[$row['day']] = (float)$row['total'];
-//        }
-//
-//        $result = [];
-//        foreach ($data as $day => $total) {
-//            $result[] = [
-//                'x' => $day,
-//                'y' => $total
-//            ];
-//        }
-//
-//        return $result;
-//    }
 
     public static function getMonths(){
         return array_values([

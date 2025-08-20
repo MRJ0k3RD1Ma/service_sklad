@@ -88,10 +88,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getComes()
-    {
-        return $this->hasMany(Come::class, ['register_id' => 'id']);
-    }
+
 
     /**
      * Gets query for [[Role]].
@@ -108,20 +105,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getSaleCredits()
-    {
-        return $this->hasMany(SaleCredit::class, ['user_id' => 'id']);
-    }
+
 
     /**
      * Gets query for [[Sales]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getSales()
-    {
-        return $this->hasMany(Sale::class, ['user_id' => 'id']);
-    }
 
 
 

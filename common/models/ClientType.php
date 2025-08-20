@@ -31,6 +31,7 @@ class ClientType extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
             ['status','integer'],
+            [['register_id','modify_id'],'integer'],
         ];
     }
 
@@ -43,6 +44,8 @@ class ClientType extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Nomi',
             'status' => 'Status',
+            'register_id' => 'Register',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 
@@ -54,5 +57,13 @@ class ClientType extends \yii\db\ActiveRecord
     public function getClients()
     {
         return $this->hasMany(Client::class, ['type_id' => 'id']);
+    }
+
+    public function getRegister(){
+        return $this->hasOne(User::className(), ['id' => 'register_id']);
+    }
+
+    public function getModify(){
+        return $this->hasOne(User::className(), ['id' => 'modify_id']);
     }
 }
