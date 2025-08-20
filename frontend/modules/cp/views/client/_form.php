@@ -10,8 +10,11 @@ use yii\widgets\ActiveForm;
 
 <div class="client-form">
 
-    <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'type_id')->textInput() ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -19,53 +22,28 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'phone_two')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\ClientType::find()->all(),'id','name'),['prompt'=>'Mijoz turini tanlang']) ?>
-
     <?= $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
 
-    <div class="form-group" style="margin-bottom: 10px;">
-        <img src="/upload/<?= $model->isNewRecord ? 'default/avatar.png' : $model->image?>" id="blah" style="height:150px; width:auto;">
-    </div>
-    <div class="form-group">
-        <label>Rasm</label>
-        <div class="custom-file">
-            <input type="file" name="Client[image]" id="client-image" class="custom-file-input">
-            <label class="custom-file-label">Rasmni tanlang</label>
-        </div>
-    </div>
+    <?= $form->field($model, 'balance')->textInput() ?>
+
+    <?= $form->field($model, 'credit')->textInput() ?>
+
+    <?= $form->field($model, 'debt')->textInput() ?>
+
+    <?= $form->field($model, 'status')->textInput() ?>
+
+    <?= $form->field($model, 'created')->textInput() ?>
+
+    <?= $form->field($model, 'updated')->textInput() ?>
+
+    <?= $form->field($model, 'register_id')->textInput() ?>
+
+    <?= $form->field($model, 'modify_id')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
-
-
-<?php
-$this->registerJs("
-    IMask(document.getElementById(\"client-phone\"), {mask: \"(00)000-0000\"})
-")
-?>
-
-<?php
-$this->registerJs("
-        function readURL(input) {
-          if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            
-            reader.onload = function(e) {
-              $('#blah').attr('src', e.target.result);
-            }
-            
-            reader.readAsDataURL(input.files[0]);
-          }
-        }
-        
-        $('#client-image').change(function() {
-          readURL(this);
-        });
- 
-");
-

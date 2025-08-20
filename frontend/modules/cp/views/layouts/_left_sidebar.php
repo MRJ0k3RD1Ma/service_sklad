@@ -22,12 +22,6 @@
                         <span class="mtext">Dashboard</span>
                     </a>
                 </li>
-                <li>
-                    <a href="<?= Yii::$app->urlManager->createUrl(['/cp/gen/sale'])?>" class="dropdown-toggle no-arrow <?= (Yii::$app->controller->id == 'gen' and Yii::$app->controller->action->id == 'sale') ? 'active' : ''?>">
-                        <span class="micon bi bi-currency-dollar"></span>
-                        <span class="mtext">Sotuv</span>
-                    </a>
-                </li>
 
 
                 <li class="dropdown">

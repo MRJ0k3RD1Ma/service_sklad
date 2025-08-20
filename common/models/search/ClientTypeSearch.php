@@ -17,8 +17,8 @@ class ClientTypeSearch extends ClientType
     public function rules()
     {
         return [
-            [['id','status'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['name', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -35,12 +35,13 @@ class ClientTypeSearch extends ClientType
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param string|null $formName Form name to be used into `->load()` method.
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $formName = null)
     {
-        $query = ClientType::find()->orderBy(['id' => SORT_DESC]);
+        $query = ClientType::find()->orderBy(['id'=>SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -48,20 +49,22 @@ class ClientTypeSearch extends ClientType
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $this->load($params, $formName);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-        if($this->status == null){
-            $query->andWhere(['status'=>1]);
-        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'status' => $this->status,
+            'created' => $this->created,
+            'updated' => $this->updated,
+            'register_id' => $this->register_id,
+            'modify_id' => $this->modify_id,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

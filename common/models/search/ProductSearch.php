@@ -4,12 +4,12 @@ namespace common\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Client;
+use common\models\Product;
 
 /**
- * ClientSearch represents the model behind the search form of `common\models\Client`.
+ * ProductSearch represents the model behind the search form of `common\models\Product`.
  */
-class ClientSearch extends Client
+class ProductSearch extends Product
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,9 @@ class ClientSearch extends Client
     public function rules()
     {
         return [
-            [['id', 'type_id', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['image', 'name', 'phone', 'phone_two', 'comment', 'created', 'updated'], 'safe'],
-            [['balance', 'credit', 'debt'], 'number'],
+            [['id', 'group_id', 'unit_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['type', 'name', 'image', 'created', 'updated'], 'safe'],
+            [['price'], 'number'],
         ];
     }
 
@@ -42,7 +42,7 @@ class ClientSearch extends Client
      */
     public function search($params, $formName = null)
     {
-        $query = Client::find()->orderBy(['id'=>SORT_DESC]);
+        $query = Product::find()->orderBy(['id'=>SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -61,22 +61,19 @@ class ClientSearch extends Client
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'type_id' => $this->type_id,
-            'balance' => $this->balance,
-            'credit' => $this->credit,
-            'debt' => $this->debt,
+            'group_id' => $this->group_id,
+            'unit_id' => $this->unit_id,
             'status' => $this->status,
             'created' => $this->created,
             'updated' => $this->updated,
+            'price' => $this->price,
             'register_id' => $this->register_id,
             'modify_id' => $this->modify_id,
         ]);
 
-        $query->andFilterWhere(['like', 'image', $this->image])
+        $query->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'phone', $this->phone])
-            ->andFilterWhere(['like', 'phone_two', $this->phone_two])
-            ->andFilterWhere(['like', 'comment', $this->comment]);
+            ->andFilterWhere(['like', 'image', $this->image]);
 
         return $dataProvider;
     }

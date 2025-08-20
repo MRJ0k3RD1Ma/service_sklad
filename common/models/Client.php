@@ -3,94 +3,75 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "client".
+ * This is the model class for table "md_service_sklad.client".
  *
  * @property int $id
+ * @property string $image
+ * @property int|null $type_id
  * @property string $name
  * @property string|null $phone
  * @property string|null $phone_two
- * @property int $type_id
  * @property string|null $comment
- * @property float|null $balans
+ * @property float|null $balance
  * @property float|null $credit
  * @property float|null $debt
  * @property int|null $status
  * @property string|null $created
  * @property string|null $updated
+ * @property int|null $register_id
+ * @property int|null $modify_id
  *
  * @property ClientType $type
  */
-class Client extends \yii\db\ActiveRecord
+class Client extends ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
+        // Schema + jadval nomi
         return 'client';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
-            [['name', 'type_id'], 'required'],
-            [['type_id', 'status','register_id','modify_id'], 'integer'],
-            [['balans', 'credit', 'debt'], 'number'],
+            [['name'], 'required'],
+            [['type_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['balance', 'credit', 'debt'], 'number'],
             [['created', 'updated'], 'safe'],
-            [['name', 'phone', 'phone_two', 'comment','image'], 'string', 'max' => 255],
+            [['image', 'name', 'phone', 'phone_two', 'comment'], 'string', 'max' => 255],
             [['type_id'], 'exist', 'skipOnError' => true, 'targetClass' => ClientType::class, 'targetAttribute' => ['type_id' => 'id']],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'name' => 'Nomi',
-            'phone' => 'Telefon',
-            'image' => 'Rasm',
-            'phone_two' => 'Qo`shimcha tel',
-            'type_id' => 'Turi',
-            'comment' => 'Izoh',
-            'balans' => 'Balans',
-            'credit' => 'Qarz',
-            'debt' => 'To`lov',
+            'image' => 'Image',
+            'type_id' => 'Client Type',
+            'name' => 'Name',
+            'phone' => 'Phone',
+            'phone_two' => 'Phone Two',
+            'comment' => 'Comment',
+            'balance' => 'Balance',
+            'credit' => 'Credit',
+            'debt' => 'Debt',
             'status' => 'Status',
-            'created' => 'Kiritildi',
-            'updated' => 'O`zgartirildi',
-            'register_id'=>'Register',
-            'modify_id'=>'O`zgartirdi',
+            'created' => 'Created At',
+            'updated' => 'Updated At',
+            'register_id' => 'Register ID',
+            'modify_id' => 'Modify ID',
         ];
     }
 
-
-
     /**
-     * Gets query for [[Type]].
-     *
-     * @return \yii\db\ActiveQuery
+     * Relation: ClientType
      */
     public function getType()
     {
         return $this->hasOne(ClientType::class, ['id' => 'type_id']);
     }
-
-    public function getRegister()
-    {
-        return $this->hasOne(User::class, ['id' => 'register_id']);
-    }
-
-    public function getModify(){
-        return $this->hasOne(User::class, ['id' => 'modify_id']);
-    }
-
-
 }

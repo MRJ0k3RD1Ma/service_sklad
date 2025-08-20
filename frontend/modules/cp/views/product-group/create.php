@@ -3,13 +3,13 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Client $model */
+/** @var common\models\ProductGroup $model */
 
-$this->title = 'Qo`shish Client';
-$this->params['breadcrumbs'][] = ['label' => 'Clients', 'url' => ['index']];
+$this->title = 'Qo`shish Product Group';
+$this->params['breadcrumbs'][] = ['label' => 'Product Groups', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="client-create">
+<div class="product-group-create">
 
     <div class="card">
         <div class="card-body">

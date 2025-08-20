@@ -13,14 +13,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="paid-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <div class="card">
+        <div class="card-body">
+            
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('O`zgartirish', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('O`chirish', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Siz rostdan ham ushbu ma`lumotni o`chirmoqchimisiz?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,17 +31,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'sale_id',
+            'contract_id',
             'price',
             'payment_id',
+            'client_id',
             'date',
             'status',
             'created',
             'updated',
             'register_id',
             'modify_id',
-            'type',
         ],
     ]) ?>
 
+        </div>
+    </div>
 </div>

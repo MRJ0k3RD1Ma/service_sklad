@@ -7,7 +7,7 @@ use common\models\search\PaidSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use Yii;
 /**
  * PaidController implements the CRUD actions for Paid model.
  */
@@ -70,14 +70,21 @@ class PaidController extends Controller
         $model = new Paid();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->register_id = Yii::$app->user->id;
+                $model->modify_id = Yii::$app->user->id;
+                if($model->save()){
+                    Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
+                }else{
+                    Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }
@@ -93,11 +100,17 @@ class PaidController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+             $model->modify_id = Yii::$app->user->id;
+            if($model->save()){
+                Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
+            }else{
+                Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }

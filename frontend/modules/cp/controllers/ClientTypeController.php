@@ -70,18 +70,21 @@ class ClientTypeController extends Controller
         $model = new ClientType();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success','Amal muvaffaqiyatli bajarildi');
-                return $this->redirect(['index']);
-            }else{
-                Yii::$app->session->setFlash('error','Ma`lumotni qo`shishda xatolik. Iltimos qayta urinib ko`ring.');
-                return $this->redirect(['index']);
+            if ($model->load($this->request->post())) {
+                $model->register_id = Yii::$app->user->id;
+                $model->modify_id = Yii::$app->user->id;
+                if($model->save()){
+                    Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
+                }else{
+                    Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
+                }
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
         }
 
-        return $this->renderAjax('create', [
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }
@@ -98,15 +101,16 @@ class ClientTypeController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+             $model->modify_id = Yii::$app->user->id;
             if($model->save()){
-                Yii::$app->session->setFlash('success','Amal muvaffaqiyatli bajarildi');
-                return $this->redirect(['index']);
+                Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
             }else{
-                Yii::$app->session->setFlash('error','Ma`lumotni o`zgartirishda xatolik. Iltimos qayta urinib ko`ring.');
-                return $this->redirect(['index']);
+                Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
             }
+            return $this->redirect(['view', 'id' => $model->id]);
         }
-        return $this->renderAjax('update', [
+
+        return $this->renderAjax('_form', [
             'model' => $model,
         ]);
     }

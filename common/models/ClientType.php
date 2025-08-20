@@ -2,68 +2,46 @@
 
 namespace common\models;
 
-use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "client_type".
  *
  * @property int $id
  * @property string $name
- *
- * @property Client[] $clients
+ * @property int|null $status
+ * @property string|null $created
+ * @property string|null $updated
+ * @property int|null $register_id
+ * @property int|null $modify_id
  */
-class ClientType extends \yii\db\ActiveRecord
+class ClientType extends ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'client_type';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
             [['name'], 'required'],
+            [['status', 'register_id', 'modify_id'], 'integer'],
+            [['created', 'updated'], 'safe'],
             [['name'], 'string', 'max' => 255],
-            ['status','integer'],
-            [['register_id','modify_id'],'integer'],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'name' => 'Nomi',
+            'name' => 'Name',
             'status' => 'Status',
-            'register_id' => 'Register',
-            'modify_id' => 'O`zgartirdi',
+            'created' => 'Created At',
+            'updated' => 'Updated At',
+            'register_id' => 'Register ID',
+            'modify_id' => 'Modify ID',
         ];
-    }
-
-    /**
-     * Gets query for [[Clients]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getClients()
-    {
-        return $this->hasMany(Client::class, ['type_id' => 'id']);
-    }
-
-    public function getRegister(){
-        return $this->hasOne(User::className(), ['id' => 'register_id']);
-    }
-
-    public function getModify(){
-        return $this->hasOne(User::className(), ['id' => 'modify_id']);
     }
 }

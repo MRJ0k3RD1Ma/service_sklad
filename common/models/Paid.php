@@ -3,88 +3,78 @@
 namespace common\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "paid".
  *
  * @property int $id
- * @property int|null $sale_id
+ * @property int|null $contract_id
  * @property float $price
  * @property int $payment_id
+ * @property int|null $client_id
  * @property string|null $date
  * @property int|null $status
  * @property string|null $created
  * @property string|null $updated
  * @property int|null $register_id
  * @property int|null $modify_id
- * @property string|null $type
  *
- * @property User $modify
+ * @property Client $client
  * @property Payment $payment
+ * @property Contract $contract
  * @property User $register
- * @property Sale $sale
+ * @property User $modify
  */
-class Paid extends \yii\db\ActiveRecord
+class Paid extends ActiveRecord
 {
-    /**
-     * {@inheritdoc}
-     */
     public static function tableName()
     {
         return 'paid';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function rules()
     {
         return [
-            [['sale_id', 'payment_id', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['price', 'payment_id'], 'required'],
+            [['contract_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['price'], 'required'],
             [['price'], 'number'],
             [['date', 'created', 'updated'], 'safe'],
-            [['type'], 'string'],
-            [['modify_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modify_id' => 'id']],
             [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::class, 'targetAttribute' => ['payment_id' => 'id']],
+            [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => Client::class, 'targetAttribute' => ['client_id' => 'id']],
+            [['contract_id'], 'exist', 'skipOnError' => true, 'targetClass' => Contract::class, 'targetAttribute' => ['contract_id' => 'id']],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['register_id' => 'id']],
+            [['modify_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modify_id' => 'id']],
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'sale_id' => 'Sotuv',
-            'price' => 'Summa',
-            'payment_id' => 'To`lov turi',
-            'date' => 'Sana',
+            'contract_id' => 'Contract',
+            'price' => 'Price',
+            'payment_id' => 'Payment',
+            'client_id' => 'Client',
+            'date' => 'Date',
             'status' => 'Status',
-            'created' => 'Kiritildi',
-            'updated' => 'O`zgartirildi',
-            'register_id' => 'Kiritdi',
-            'modify_id' => 'O`zgartirdi',
-            'type' => 'Turi',
+            'created' => 'Created At',
+            'updated' => 'Updated At',
+            'register_id' => 'Register ID',
+            'modify_id' => 'Modify ID',
         ];
     }
 
     /**
-     * Gets query for [[Modify]].
-     *
-     * @return \yii\db\ActiveQuery
+     * Relation: Client
      */
-    public function getModify()
+    public function getClient()
     {
-        return $this->hasOne(User::class, ['id' => 'modify_id']);
+        return $this->hasOne(Client::class, ['id' => 'client_id']);
     }
 
     /**
-     * Gets query for [[Payment]].
-     *
-     * @return \yii\db\ActiveQuery
+     * Relation: Payment
      */
     public function getPayment()
     {
@@ -92,9 +82,15 @@ class Paid extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Register]].
-     *
-     * @return \yii\db\ActiveQuery
+     * Relation: Sale
+     */
+    public function getSale()
+    {
+        return $this->hasOne(Sale::class, ['id' => 'contract_id']);
+    }
+
+    /**
+     * Relation: User (Register)
      */
     public function getRegister()
     {
@@ -102,67 +98,10 @@ class Paid extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Sale]].
-     *
-     * @return \yii\db\ActiveQuery
+     * Relation: User (Modify)
      */
-
-    public function getClient()
+    public function getModify()
     {
-        return $this->hasMany(Client::class, ['id' => 'client_id'])->viaTable('paid_client', ['paid_id' => 'id']);
-    }
-
-    public static function getYearlyData($year){
-
-        $query = self::find()
-            ->select(['MONTH(date) as month', 'SUM(price) as total'])
-            ->where(['YEAR(date)' => $year])
-            ->groupBy(['MONTH(date)'])
-            ->asArray()
-            ->all();
-
-        $data = [];
-        for ($i = 1; $i <= 12; $i++) {
-            $data[$i] = 0; // Initialize all months to 0
-        }
-
-        foreach ($query as $row) {
-            $data[$row['month']] = (float)$row['total']; // Assign the total to the corresponding month
-        }
-
-        return array_values($data);
-    }
-
-
-    public static function getMonths(){
-        return array_values([
-            1 => 'Yanvar',
-            2 => 'Fevral',
-            3 => 'Mart',
-            4 => 'Aprel',
-            5 => 'May',
-            6 => 'Iyun',
-            7 => 'Iyul',
-            8 => 'Avgust',
-            9 => 'Sentabr',
-            10 => 'Oktabr',
-            11 => 'Noyabr',
-            12 => 'Dekabr'
-        ]);
-    }
-
-    public function getTopProductsData(){
-
-        $saleProducts = [];
-        $data = [];
-        foreach ($saleProducts as $item){
-            $data[] = [
-                'x'=>$item->product->name,
-                'y'=>$item->topcount,
-                't'=>$item->product_id,
-                'f'=>$item->product->unit->name
-            ];
-        }
-        return $data;
+        return $this->hasOne(User::class, ['id' => 'modify_id']);
     }
 }

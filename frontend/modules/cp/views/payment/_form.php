@@ -4,11 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\ClientType $model */
+/** @var common\models\Payment $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="client-type-form">
+<div class="payment-form">
 
     <?php $form = ActiveForm::begin(); ?>
 

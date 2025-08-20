@@ -12,11 +12,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'sale_id')->textInput() ?>
+    <?= $form->field($model, 'contract_id')->textInput() ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 
     <?= $form->field($model, 'payment_id')->textInput() ?>
+
+    <?= $form->field($model, 'client_id')->textInput() ?>
 
     <?= $form->field($model, 'date')->textInput() ?>
 
@@ -29,8 +31,6 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'register_id')->textInput() ?>
 
     <?= $form->field($model, 'modify_id')->textInput() ?>
-
-    <?= $form->field($model, 'type')->dropDownList([ 1 => '1', 2 => '2', ], ['prompt' => '']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

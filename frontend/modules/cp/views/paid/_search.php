@@ -4,29 +4,44 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\search\SaleSearch $model */
+/** @var common\models\search\PaidSearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="sale-search">
+<div class="paid-search">
 
     <?php $form = ActiveForm::begin([
+        'action' => ['index'],
         'method' => 'get',
-        'options' => [
-            'class'=>'form-inline',
-        ]
     ]); ?>
 
-    <?= $form->field($model, 'period_start')->textInput(['type'=>'date'])->label('Sanadan &nbsp;') ?>
-    &nbsp;- &nbsp;
-    <?= $form->field($model, 'period_end')->textInput(['type'=>'date'])->label('Sanagacha &nbsp;') ?>
+    <?= $form->field($model, 'id') ?>
 
-    &nbsp;&nbsp;
+    <?= $form->field($model, 'contract_id') ?>
+
+    <?= $form->field($model, 'price') ?>
+
+    <?= $form->field($model, 'payment_id') ?>
+
+    <?= $form->field($model, 'client_id') ?>
+
+    <?php // echo $form->field($model, 'date') ?>
+
+    <?php // echo $form->field($model, 'status') ?>
+
+    <?php // echo $form->field($model, 'created') ?>
+
+    <?php // echo $form->field($model, 'updated') ?>
+
+    <?php // echo $form->field($model, 'register_id') ?>
+
+    <?php // echo $form->field($model, 'modify_id') ?>
+
     <div class="form-group">
-        <?= Html::submitButton('Qidirish', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
 
 </div>
-

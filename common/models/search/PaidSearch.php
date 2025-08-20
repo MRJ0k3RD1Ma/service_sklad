@@ -14,15 +14,12 @@ class PaidSearch extends Paid
     /**
      * {@inheritdoc}
      */
-
-    public $period_end, $period_start;
-
     public function rules()
     {
         return [
-            [['id', 'sale_id', 'payment_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['id', 'contract_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['price'], 'number'],
-            [['date','period_end','period_start', 'created', 'updated', 'type'], 'safe'],
+            [['date', 'created', 'updated'], 'safe'],
         ];
     }
 
@@ -54,26 +51,20 @@ class PaidSearch extends Paid
         ]);
 
         $this->load($params, $formName);
-        if($this->period_start){
-            $query->andFilterWhere(['>=', 'date', $this->period_start]);
-        }
-        if($this->period_end){
-            $query->andFilterWhere(['<=', 'date', $this->period_end]);
-        }
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
-        if($this->status == null){
-            $query->andWhere(['status' => 1]);
-        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'sale_id' => $this->sale_id,
+            'contract_id' => $this->contract_id,
             'price' => $this->price,
             'payment_id' => $this->payment_id,
+            'client_id' => $this->client_id,
             'date' => $this->date,
             'status' => $this->status,
             'created' => $this->created,
@@ -81,8 +72,6 @@ class PaidSearch extends Paid
             'register_id' => $this->register_id,
             'modify_id' => $this->modify_id,
         ]);
-
-        $query->andFilterWhere(['like', 'type', $this->type]);
 
         return $dataProvider;
     }

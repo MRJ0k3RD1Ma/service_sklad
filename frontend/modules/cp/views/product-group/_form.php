@@ -4,17 +4,21 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\ClientType $model */
+/** @var common\models\ProductGroup $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="client-type-form">
+<div class="product-group-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
+
+    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'type')->dropDownList([ 'SERVICE' => 'SERVICE', 'PRODUCT' => 'PRODUCT', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'created')->textInput() ?>
 

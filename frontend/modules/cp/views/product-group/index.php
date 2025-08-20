@@ -1,19 +1,19 @@
 <?php
 
-use common\models\Paid;
+use common\models\ProductGroup;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\search\PaidSearch $searchModel */
+/** @var common\models\search\ProductGroupSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Paids';
+$this->title = 'Product Groups';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="paid-index">
+<div class="product-group-index">
     <div class="card">
         <div class="card-body">
             
@@ -30,12 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'contract_id',
-            'price',
-            'payment_id',
-            'client_id',
-            //'date',
-            //'status',
+            'name',
+            'status',
+            'image',
+            'type',
             //'created',
             //'updated',
             //'register_id',

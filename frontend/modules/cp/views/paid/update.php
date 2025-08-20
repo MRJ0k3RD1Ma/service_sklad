@@ -5,17 +5,21 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Paid $model */
 
-$this->title = 'Update Paid: ' . $model->id;
+$this->title = 'O`zgartirish Paid: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Paids', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'O`zgartirish';
 ?>
 <div class="paid-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+       <div class="card">
+        <div class="card-body">
+        <?= $this->render('_form', [
+                'model' => $model,
+            ]) ?>
+        </div>
+    </div>
+   
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
 
 </div>
