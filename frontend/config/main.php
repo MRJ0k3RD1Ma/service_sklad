@@ -21,6 +21,8 @@ return [
         'gridview' => [
             'class' => '\kartik\grid\Module',
         ],
+
+
         'service' => [
             'class' => 'frontend\modules\service\Module',
         ],
