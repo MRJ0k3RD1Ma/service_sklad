@@ -36,12 +36,12 @@ class ClientType extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Nomi',
             'status' => 'Status',
-            'created' => 'Created At',
-            'updated' => 'Updated At',
-            'register_id' => 'Register ID',
-            'modify_id' => 'Modify ID',
+            'created' => 'Kiritildi',
+            'updated' => 'O`zgartirildi',
+            'register_id' => 'Kiritdi',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 }

@@ -50,20 +50,20 @@ class Client extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'image' => 'Image',
-            'type_id' => 'Client Type',
-            'name' => 'Name',
-            'phone' => 'Phone',
-            'phone_two' => 'Phone Two',
-            'comment' => 'Comment',
-            'balance' => 'Balance',
-            'credit' => 'Credit',
-            'debt' => 'Debt',
+            'image' => 'Rasm',
+            'type_id' => 'Mijoz turi',
+            'name' => 'Nomi',
+            'phone' => 'Telefon',
+            'phone_two' => 'Qo`shimcha telefon',
+            'comment' => 'Izoh',
+            'balance' => 'Balans',
+            'credit' => 'Qarzdorlik',
+            'debt' => 'Ortiqcha to`lov',
             'status' => 'Status',
-            'created' => 'Created At',
-            'updated' => 'Updated At',
-            'register_id' => 'Register ID',
-            'modify_id' => 'Modify ID',
+            'created' => 'Kiritildi',
+            'updated' => 'O`zgartirildi',
+            'register_id' => 'Kiritdi',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 

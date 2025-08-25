@@ -40,14 +40,14 @@ class ProductGroup extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Nomi',
+            'image' => 'Rasm',
+            'type' => 'Turi',
             'status' => 'Status',
-            'image' => 'Image',
-            'type' => 'Type',
-            'created' => 'Created At',
-            'updated' => 'Updated At',
-            'register_id' => 'Register ID',
-            'modify_id' => 'Modify ID',
+            'created' => 'Kiritildi',
+            'updated' => 'O`zgartirildi',
+            'register_id' => 'Kiritdi',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 }

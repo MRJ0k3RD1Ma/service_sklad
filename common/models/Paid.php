@@ -52,19 +52,30 @@ class Paid extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'contract_id' => 'Contract',
-            'price' => 'Price',
-            'payment_id' => 'Payment',
-            'client_id' => 'Client',
-            'date' => 'Date',
+            'contract_id' => 'Shartnoma',
+            'price' => 'Narxi',
+            'payment_id' => 'To`lov turi',
+            'client_id' => 'Mijoz',
+            'date' => 'Sana',
             'status' => 'Status',
-            'created' => 'Created At',
-            'updated' => 'Updated At',
-            'register_id' => 'Register ID',
-            'modify_id' => 'Modify ID',
+            'created' => 'Kiritildi',
+            'updated' => 'O`zgartirildi',
+            'register_id' => 'Kiritdi',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 
+    public function getMonths(){
+        return [];
+    }
+
+    public function getYearlyData(){
+        return [];
+    }
+
+    public function getTopProductsData(){
+        return [];
+    }
     /**
      * Relation: Client
      */
@@ -81,13 +92,6 @@ class Paid extends ActiveRecord
         return $this->hasOne(Payment::class, ['id' => 'payment_id']);
     }
 
-    /**
-     * Relation: Sale
-     */
-    public function getSale()
-    {
-        return $this->hasOne(Sale::class, ['id' => 'contract_id']);
-    }
 
     /**
      * Relation: User (Register)

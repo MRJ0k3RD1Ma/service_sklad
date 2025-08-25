@@ -23,7 +23,20 @@
                     </a>
                 </li>
 
-
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon bi bi-gear-fill"></span>
+                        <span class="mtext">Kassa</span>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid'])?>" class="dropdown-toggle no-arrow <?= (Yii::$app->controller->id == 'paid') ? 'active' : ''?>">
+                                <span class="mtext">Tushumlar</span>
+                            </a>
+                        </li>
+                        <li><a class="<?= (Yii::$app->controller->id == 'paid-worker') ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/payment'])?>">To'lov turlari</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon bi bi-list"></span>
@@ -35,6 +48,12 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cp/worker'])?>" class="dropdown-toggle no-arrow <?= Yii::$app->controller->id == 'worker' ? 'active' : ''?>">
+                        <span class="micon bi bi-person-badge"></span>
+                        <span class="mtext">Brigadirlar</span>
+                    </a>
+                </li>
 
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
@@ -58,13 +77,21 @@
                 </li>
 
 
-                <li>
-                    <a href="<?= Yii::$app->urlManager->createUrl(['/cp/user'])?>" class="dropdown-toggle no-arrow <?= (Yii::$app->controller->id == 'user') ? 'active' : ''?>">
-                        <span class="micon bi bi-people"></span>
-                        <span class="mtext">Foydalanuvchilar</span>
-                    </a>
-                </li>
 
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon bi bi-gear-fill"></span>
+                        <span class="mtext">Sozlamalar</span>
+                    </a>
+                    <ul class="submenu">
+                        <li>
+                            <a href="<?= Yii::$app->urlManager->createUrl(['/cp/user'])?>" class="dropdown-toggle no-arrow <?= (Yii::$app->controller->id == 'user') ? 'active' : ''?>">
+                                <span class="mtext">Foydalanuvchilar</span>
+                            </a>
+                        </li>
+                        <li><a class="<?= (Yii::$app->controller->id == 'payment') ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/payment'])?>">To'lov turlari</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </div>

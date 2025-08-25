@@ -45,16 +45,16 @@ class Product extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'type' => 'Type',
-            'name' => 'Name',
-            'group_id' => 'Group',
-            'image' => 'Image',
+            'type' => 'Turi',
+            'name' => 'Nomi',
+            'group_id' => 'Guruhi',
+            'image' => 'Rasm',
+            'price' => 'Narxi',
             'status' => 'Status',
-            'created' => 'Created At',
-            'updated' => 'Updated At',
-            'price' => 'Price',
-            'register_id' => 'Register ID',
-            'modify_id' => 'Modify ID',
+            'created' => 'Kiritildi',
+            'updated' => 'O`zgartirildi',
+            'register_id' => 'Kiritdi',
+            'modify_id' => 'O`zgartirdi',
         ];
     }
 
