@@ -19,7 +19,7 @@ class ProductSearch extends Product
         return [
             [['id', 'group_id', 'unit_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['type', 'name', 'image', 'created', 'updated'], 'safe'],
-            [['price'], 'number'],
+            [['price', 'min_volume', 'volume_price'], 'number'],
         ];
     }
 
@@ -57,9 +57,7 @@ class ProductSearch extends Product
             // $query->where('0=1');
             return $dataProvider;
         }
-        if($this->status == null){
-            $this->status  = 1;
-        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -71,6 +69,8 @@ class ProductSearch extends Product
             'price' => $this->price,
             'register_id' => $this->register_id,
             'modify_id' => $this->modify_id,
+            'min_volume' => $this->min_volume,
+            'volume_price' => $this->volume_price,
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])

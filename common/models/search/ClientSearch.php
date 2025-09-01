@@ -19,7 +19,7 @@ class ClientSearch extends Client
         return [
             [['id', 'type_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['image', 'name', 'phone', 'phone_two', 'comment', 'created', 'updated'], 'safe'],
-            [['balance', 'credit', 'debt'], 'number'],
+            [['balance'], 'number'],
         ];
     }
 
@@ -58,16 +58,11 @@ class ClientSearch extends Client
             return $dataProvider;
         }
 
-        if($this->status == null){
-            $this->status  = 1;
-        }
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'type_id' => $this->type_id,
             'balance' => $this->balance,
-            'credit' => $this->credit,
-            'debt' => $this->debt,
             'status' => $this->status,
             'created' => $this->created,
             'updated' => $this->updated,

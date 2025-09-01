@@ -24,11 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'balance')->textInput() ?>
-
-    <?= $form->field($model, 'credit')->textInput() ?>
-
-    <?= $form->field($model, 'debt')->textInput() ?>
+    <?= $form->field($model, 'balance')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
 

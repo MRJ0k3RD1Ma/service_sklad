@@ -17,7 +17,7 @@ class PaidSearch extends Paid
     public function rules()
     {
         return [
-            [['id', 'contract_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['id', 'sale_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['price'], 'number'],
             [['date', 'created', 'updated'], 'safe'],
         ];
@@ -57,13 +57,11 @@ class PaidSearch extends Paid
             // $query->where('0=1');
             return $dataProvider;
         }
-        if($this->status == null){
-            $this->status  = 1;
-        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'contract_id' => $this->contract_id,
+            'sale_id' => $this->sale_id,
             'price' => $this->price,
             'payment_id' => $this->payment_id,
             'client_id' => $this->client_id,

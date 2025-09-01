@@ -37,8 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
             //'phone_two',
             //'comment',
             //'balance',
-            //'credit',
-            //'debt',
             //'status',
             //'created',
             //'updated',

@@ -124,8 +124,9 @@ class PaidController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->status = -1;
+        $model->save(false);
         return $this->redirect(['index']);
     }
 

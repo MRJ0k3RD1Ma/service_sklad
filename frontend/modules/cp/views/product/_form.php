@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'group_id')->textInput() ?>
 
+    <?= $form->field($model, 'unit_id')->textInput() ?>
+
     <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'status')->textInput() ?>
@@ -26,11 +28,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'updated')->textInput() ?>
 
-    <?= $form->field($model, 'price')->textInput() ?>
+    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'register_id')->textInput() ?>
 
     <?= $form->field($model, 'modify_id')->textInput() ?>
+
+    <?= $form->field($model, 'min_volume')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'volume_price')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

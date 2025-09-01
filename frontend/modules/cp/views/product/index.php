@@ -41,6 +41,8 @@ $this->params['breadcrumbs'][] = $this->title;
             //'price',
             //'register_id',
             //'modify_id',
+            //'min_volume',
+            //'volume_price',
         ],
     ]); ?>
 
