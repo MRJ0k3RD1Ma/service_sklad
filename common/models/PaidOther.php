@@ -6,42 +6,42 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "paid".
+ * This is the model class for table "paid_other".
  *
  * @property int $id
- * @property int|null $sale_id
- * @property float $price
- * @property int $payment_id
- * @property int|null $client_id
- * @property string|null $date
+ * @property string|null $type
+ * @property int|null $group_id
+ * @property string|null $description
+ * @property string|null $paid_date
+ * @property int|null $payment_id
+ * @property float|null $price
  * @property int|null $status
  * @property string|null $created
  * @property string|null $updated
  * @property int|null $register_id
  * @property int|null $modify_id
  *
- * @property Client $client
+ * @property PaidOtherGroup $group
+ * @property Payment $payment
  * @property User $register
  * @property User $modify
- * @property Payment $payment
- * @property Sale $sale
  */
-class Paid extends ActiveRecord
+class PaidOther extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'paid';
+        return 'paid_other';
     }
 
     public function rules()
     {
         return [
-            [['price', 'payment_id'], 'required'],
-            [['sale_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['group_id', 'payment_id', 'status', 'register_id', 'modify_id'], 'integer'],
+            [['description'], 'string'],
+            [['paid_date', 'created', 'updated'], 'safe'],
             [['price'], 'number'],
-            [['date', 'created', 'updated'], 'safe'],
-            [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => Client::class, 'targetAttribute' => ['client_id' => 'id']],
-            [['sale_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sale::class, 'targetAttribute' => ['sale_id' => 'id']],
+            [['type'], 'in', 'range' => ['INCOME', 'OUTCOME']],
+            [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => PaidOtherGroup::class, 'targetAttribute' => ['group_id' => 'id']],
             [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::class, 'targetAttribute' => ['payment_id' => 'id']],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['register_id' => 'id']],
             [['modify_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modify_id' => 'id']],
@@ -52,11 +52,12 @@ class Paid extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'sale_id' => 'Savdo',
-            'price' => 'Summasi',
+            'type' => 'Turi (Kirim/Chiqim)',
+            'group_id' => 'Guruh',
+            'description' => 'Izoh',
+            'paid_date' => 'To‘lov sanasi',
             'payment_id' => 'To‘lov turi',
-            'client_id' => 'Mijoz',
-            'date' => 'Sana',
+            'price' => 'Summasi',
             'status' => 'Status',
             'created' => 'Kiritildi',
             'updated' => 'O`zgartirildi',
@@ -65,14 +66,9 @@ class Paid extends ActiveRecord
         ];
     }
 
-    public function getClient()
+    public function getGroup()
     {
-        return $this->hasOne(Client::class, ['id' => 'client_id']);
-    }
-
-    public function getSale()
-    {
-        return $this->hasOne(Sale::class, ['id' => 'sale_id']);
+        return $this->hasOne(PaidOtherGroup::class, ['id' => 'group_id']);
     }
 
     public function getPayment()

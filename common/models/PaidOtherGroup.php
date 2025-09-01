@@ -6,10 +6,10 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "client_type".
+ * This is the model class for table "paid_other_group".
  *
  * @property int $id
- * @property string $name
+ * @property string|null $name
  * @property int|null $status
  * @property string|null $created
  * @property string|null $updated
@@ -18,19 +18,18 @@ use yii\db\ActiveRecord;
  *
  * @property User $register
  * @property User $modify
- * @property Client[] $clients
+ * @property PaidOther[] $paidOthers
  */
-class ClientType extends ActiveRecord
+class PaidOtherGroup extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'client_type';
+        return 'paid_other_group';
     }
 
     public function rules()
     {
         return [
-            [['name'], 'required'],
             [['status', 'register_id', 'modify_id'], 'integer'],
             [['created', 'updated'], 'safe'],
             [['name'], 'string', 'max' => 255],
@@ -43,7 +42,7 @@ class ClientType extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Mijoz turi',
+            'name' => 'Nomi',
             'status' => 'Status',
             'created' => 'Kiritildi',
             'updated' => 'O`zgartirildi',
@@ -62,8 +61,8 @@ class ClientType extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'modify_id']);
     }
 
-    public function getClients()
+    public function getPaidOthers()
     {
-        return $this->hasMany(Client::class, ['type_id' => 'id']);
+        return $this->hasMany(PaidOther::class, ['group_id' => 'id']);
     }
 }

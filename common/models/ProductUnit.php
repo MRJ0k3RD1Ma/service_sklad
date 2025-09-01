@@ -3,13 +3,12 @@
 namespace common\models;
 
 use Yii;
-use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "client_type".
+ * This is the model class for table "md_service_sklad.product_unit".
  *
  * @property int $id
- * @property string $name
+ * @property string|null $name
  * @property int|null $status
  * @property string|null $created
  * @property string|null $updated
@@ -18,19 +17,23 @@ use yii\db\ActiveRecord;
  *
  * @property User $register
  * @property User $modify
- * @property Client[] $clients
  */
-class ClientType extends ActiveRecord
+class ProductUnit extends \yii\db\ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
     public static function tableName()
     {
-        return 'client_type';
+        return 'product_unit';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
-            [['name'], 'required'],
             [['status', 'register_id', 'modify_id'], 'integer'],
             [['created', 'updated'], 'safe'],
             [['name'], 'string', 'max' => 255],
@@ -39,31 +42,39 @@ class ClientType extends ActiveRecord
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'name' => 'Mijoz turi',
+            'name' => 'Nomi',
             'status' => 'Status',
             'created' => 'Kiritildi',
-            'updated' => 'O`zgartirildi',
+            'updated' => 'O‘zgartirildi',
             'register_id' => 'Kiritdi',
-            'modify_id' => 'O`zgartirdi',
+            'modify_id' => 'O‘zgartirdi',
         ];
     }
 
+    /**
+     * Gets query for [[Register]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getRegister()
     {
         return $this->hasOne(User::class, ['id' => 'register_id']);
     }
 
+    /**
+     * Gets query for [[Modify]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
     public function getModify()
     {
         return $this->hasOne(User::class, ['id' => 'modify_id']);
-    }
-
-    public function getClients()
-    {
-        return $this->hasMany(Client::class, ['type_id' => 'id']);
     }
 }
