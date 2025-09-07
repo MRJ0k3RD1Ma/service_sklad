@@ -89,4 +89,16 @@ class Paid extends ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'modify_id']);
     }
+
+    public static function getMonths(){
+        return [];
+    }
+
+    public static function getYearlyData(){
+        return [];
+    }
+
+    public static function getTopProductsData(){
+        return [];
+    }
 }

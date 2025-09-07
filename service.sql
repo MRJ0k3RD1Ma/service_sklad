@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 01, 2025 at 06:02 PM
+-- Generation Time: Sep 07, 2025 at 12:30 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -708,6 +708,59 @@ ALTER TABLE `user`
 ALTER TABLE `worker`
   ADD CONSTRAINT `FK_worker_modify_id` FOREIGN KEY (`modify_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_worker_register_id` FOREIGN KEY (`register_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- --------------------------------------------------------
+
+--
+-- Soddalashtirilgan biznes logika
+--
+
+--
+-- Ishchi to'lovlarini avtomatik hisoblash uchun minimal jadval
+--
+CREATE TABLE `worker_payment_calculation` (
+  `id` int(11) NOT NULL,
+  `sale_id` int(11) NOT NULL COMMENT 'Shartnoma ID',
+  `worker_id` int(11) NOT NULL COMMENT 'Ishchi ID',
+  `calculated_amount` decimal(12,2) DEFAULT 0.00 COMMENT 'Hisoblab chiqilgan summa (volume * volume_price)',
+  `is_paid` tinyint(1) DEFAULT 0 COMMENT 'To''langanmi',
+  `paid_worker_id` int(11) DEFAULT NULL COMMENT 'Haqiqiy to''lov ID',
+  `calculation_date` datetime DEFAULT current_timestamp() COMMENT 'Hisoblangan sana',
+  `status` int(11) DEFAULT 1,
+  `created` datetime DEFAULT current_timestamp(),
+  `updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `register_id` int(11) DEFAULT NULL,
+  `modify_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Ishchilar uchun to''lov hisoblash';
+
+--
+-- Indexes for worker_payment_calculation
+--
+ALTER TABLE `worker_payment_calculation`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_worker_calc_sale_id` (`sale_id`),
+  ADD KEY `FK_worker_calc_worker_id` (`worker_id`),
+  ADD KEY `FK_worker_calc_paid_worker_id` (`paid_worker_id`),
+  ADD KEY `IDX_worker_calc_is_paid` (`is_paid`),
+  ADD KEY `FK_worker_calc_register_id` (`register_id`),
+  ADD KEY `FK_worker_calc_modify_id` (`modify_id`);
+
+--
+-- AUTO_INCREMENT for worker_payment_calculation
+--
+ALTER TABLE `worker_payment_calculation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for worker_payment_calculation
+--
+ALTER TABLE `worker_payment_calculation`
+  ADD CONSTRAINT `FK_worker_calc_sale_id` FOREIGN KEY (`sale_id`) REFERENCES `sale` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_worker_calc_worker_id` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_worker_calc_paid_worker_id` FOREIGN KEY (`paid_worker_id`) REFERENCES `paid_worker` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_worker_calc_register_id` FOREIGN KEY (`register_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_worker_calc_modify_id` FOREIGN KEY (`modify_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

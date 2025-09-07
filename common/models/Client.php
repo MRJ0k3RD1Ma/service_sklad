@@ -36,7 +36,7 @@ class Client extends ActiveRecord
     public function rules()
     {
         return [
-            [['image', 'name'], 'required'],
+            [['name','phone'], 'required'],
             [['type_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['balance'], 'number'],
             [['created', 'updated'], 'safe'],

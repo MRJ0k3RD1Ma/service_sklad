@@ -78,7 +78,7 @@ class PaymentController extends Controller
                 }else{
                     Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
                 }
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['index']);
             }
         } else {
             $model->loadDefaultValues();
@@ -107,7 +107,7 @@ class PaymentController extends Controller
             }else{
                 Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
         return $this->renderAjax('_form', [

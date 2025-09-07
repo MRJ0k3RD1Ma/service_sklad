@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\UploadedFile;
+
 /**
  * ClientController implements the CRUD actions for Client model.
  */
@@ -73,6 +75,13 @@ class ClientController extends Controller
             if ($model->load($this->request->post())) {
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
+                if($model->image = UploadedFile::getInstance($model,'image')){
+                    $name = 'client/'.microtime(true).'.'.$model->image->extension;
+                    $model->image->saveAs(Yii::$app->basePath.'/web/upload/'.$name);
+                    $model->image = $name;
+                }else{
+                    $model->image = "default/avatar.png";
+                }
                 if($model->save()){
                     Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
                 }else{
@@ -99,9 +108,16 @@ class ClientController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $img = $model->image;
         if ($this->request->isPost && $model->load($this->request->post())) {
              $model->modify_id = Yii::$app->user->id;
+            if($model->image = UploadedFile::getInstance($model,'image')){
+                $name = 'client/'.microtime(true).'.'.$model->image->extension;
+                $model->image->saveAs(Yii::$app->basePath.'/web/upload/'.$name);
+                $model->image = $name;
+            }else{
+                $model->image = $img;
+            }
             if($model->save()){
                 Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
             }else{

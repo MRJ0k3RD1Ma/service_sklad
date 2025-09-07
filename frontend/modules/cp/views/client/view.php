@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card-body">
             
     <p>
-        <?= Html::a('O`zgartirish', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::button('O`zgartirish', ['value'=>Yii::$app->urlManager->createUrl(['/cp/client/update','id'=>$model->id]),'class' => 'btn btn-primary md-btnupdate'],) ?>
         <?= Html::a('O`chirish', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

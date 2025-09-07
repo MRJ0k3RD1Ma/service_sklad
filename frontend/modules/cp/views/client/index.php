@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var common\models\search\ClientSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Clients';
+$this->title = 'Mijozlar ro`yhati';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-index">
@@ -29,16 +29,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'image',
-            'type_id',
+//            'id',
+//            'image',
+//            'type_id',
             'name',
+            [
+                'attribute' => 'type_id',
+                'value' => function ($model) {
+                    return $model->type->name;
+                },
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\ClientType::find()->where(['status'=>1])->all(),'id','name')
+            ],
             'phone',
             //'phone_two',
             //'comment',
-            //'balance',
-            //'status',
-            //'created',
+            'balance',
+//            'status',
+            [
+                'attribute' => 'status',
+                'value' => function ($model) {
+                    return Yii::$app->params['status'][$model->status];
+                },
+                'filter'=>Yii::$app->params['status']
+            ],
+            'created',
             //'updated',
             //'register_id',
             //'modify_id',
