@@ -50,7 +50,9 @@ class ProductUnitSearch extends ProductUnit
         ]);
 
         $this->load($params, $formName);
-
+        if($this->status == null){
+            $this->status = 1;
+        }
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');

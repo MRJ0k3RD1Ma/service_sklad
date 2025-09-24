@@ -34,7 +34,7 @@
                                 <span class="mtext">Tushumlar</span>
                             </a>
                         </li>
-                        <li><a class="<?= (Yii::$app->controller->id == 'paid-worker') ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/payment'])?>">To'lov turlari</a></li>
+                        <li><a class="<?= (Yii::$app->controller->id == 'paid-worker') ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/paid-worker'])?>">Xodimlarga to'lovlar</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -43,8 +43,9 @@
                         <span class="mtext">Xizmatlar</span>
                     </a>
                     <ul class="submenu">
-                        <li><a class="<?= Yii::$app->controller->id == 'goods' ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/goods'])?>">Mahsulotlar ro'yhati</a></li>
-                        <li><a class="<?= Yii::$app->controller->id == 'goods-group' ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/goods-group'])?>">Mahsulot turlari</a></li>
+                        <li><a class="<?= Yii::$app->controller->id == 'product' ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/product'])?>">Xizmatlar ro'yhati</a></li>
+                        <li><a class="<?= Yii::$app->controller->id == 'product-group' ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/product-group'])?>">Xizmatlar turlari</a></li>
+                        <li><a class="<?= Yii::$app->controller->id == 'product-unit' ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/product-unit'])?>">Xizmatlar birliklari</a></li>
                     </ul>
                 </li>
 

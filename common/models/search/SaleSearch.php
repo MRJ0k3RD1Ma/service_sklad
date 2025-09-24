@@ -57,7 +57,9 @@ class SaleSearch extends Sale
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        if($this->status == null){
+            $this->status = 1;
+        }
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
