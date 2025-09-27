@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Sale $model */
 
-$this->title = 'O`zgartirish Sale: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Sales', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'O`zgartirish' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Shartnomalar', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->code, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'O`zgartirish';
 ?>
 <div class="sale-update">

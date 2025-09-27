@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\Sale $model */
 
-$this->title = 'Qo`shish Sale';
-$this->params['breadcrumbs'][] = ['label' => 'Sales', 'url' => ['index']];
+$this->title = 'Shartnoma Qo`shish';
+$this->params['breadcrumbs'][] = ['label' => 'Shartnomalar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sale-create">

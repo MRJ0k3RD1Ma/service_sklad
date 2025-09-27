@@ -32,7 +32,15 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'id',
 //            'image',
 //            'type_id',
-            'name',
+//            'name',
+            [
+                'attribute'=>'name',
+                'value'=>function($d){
+                    $url = Url::to(['client/view','id'=>$d->id]);
+                    return Html::a($d->name,$url);
+                },
+                'format'=>'raw'
+            ],
             [
                 'attribute' => 'type_id',
                 'value' => function ($model) {

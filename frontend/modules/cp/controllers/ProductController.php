@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\UploadedFile;
+
 /**
  * ProductController implements the CRUD actions for Product model.
  */
@@ -73,6 +75,13 @@ class ProductController extends Controller
             if ($model->load($this->request->post())) {
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
+                if($model->image = UploadedFile::getInstance($model,'image')){
+                    $name = 'goods/'.microtime(true).'.'.$model->image->extension;
+                    $model->image->saveAs(Yii::getAlias('@frontend').'/web/upload/'.$name);
+                    $model->image = $name;
+                }else{
+                    $model->image = 'default/nophoto.png';
+                }
                 if($model->save()){
                     Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
                 }else{
@@ -99,9 +108,16 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $img = $model->image;
         if ($this->request->isPost && $model->load($this->request->post())) {
              $model->modify_id = Yii::$app->user->id;
+            if($model->image = UploadedFile::getInstance($model,'image')){
+                $name = 'goods/'.microtime(true).'.'.$model->image->extension;
+                $model->image->saveAs(Yii::getAlias('@frontend').'/web/upload/'.$name);
+                $model->image = $name;
+            }else{
+                $model->image = $img;
+            }
             if($model->save()){
                 Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
             }else{

@@ -2,6 +2,7 @@
 
 namespace frontend\modules\cp\controllers;
 
+use common\models\Product;
 use common\models\Sale;
 use common\models\search\SaleSearch;
 use yii\web\Controller;
@@ -84,7 +85,7 @@ class SaleController extends Controller
             $model->loadDefaultValues();
         }
 
-        return $this->renderAjax('_form', [
+        return $this->render('create', [
             'model' => $model,
         ]);
     }
@@ -110,11 +111,17 @@ class SaleController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->renderAjax('_form', [
+        return $this->render('update', [
             'model' => $model,
         ]);
     }
 
+    public function actionGetproductprice($id){
+        if($model = Product::findOne($id)){
+            return $model->price;
+        }
+        return 0;
+    }
     /**
      * Deletes an existing Sale model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

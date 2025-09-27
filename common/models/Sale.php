@@ -40,6 +40,7 @@ class Sale extends ActiveRecord
     public const STATE_RUNNING = 'RUNNING';
     public const STATE_DONE    = 'DONE';
 
+    public $client_name;
     public static function tableName()
     {
         return 'sale';
@@ -48,10 +49,10 @@ class Sale extends ActiveRecord
     public function rules()
     {
         return [
-            [['client_id', 'product_id', 'worker_id'], 'required'],
+            [['client_id', 'product_id', 'worker_id','price_per'], 'required'],
             [['client_id', 'product_id', 'worker_id', 'code_id', 'register_id', 'modify_id', 'status'], 'integer'],
             [['price', 'debt', 'credit', 'volume', 'volume_estimated'], 'number'],
-            [['date', 'created', 'updated'], 'safe'],
+            [['date', 'created', 'updated','client_name'], 'safe'],
             [['code', 'address'], 'string', 'max' => 255],
             ['state', 'in', 'range' => [self::STATE_NEW, self::STATE_RUNNING, self::STATE_DONE]],
 
@@ -68,12 +69,14 @@ class Sale extends ActiveRecord
         return [
             'id' => 'ID',
             'date' => 'Sana',
+            'client_name' => 'Mijoz ismi',
             'code' => 'Kod',
             'code_id' => 'Kod ID',
             'client_id' => 'Mijoz',
             'product_id' => 'Xizmat',
-            'price' => 'Narx',
-            'debt' => 'Qarz',
+            'price' => 'Umumiy xizmat narxi',
+            'price_per'=>'Kelishilgan narxi',
+            'debt' => 'Debit',
             'credit' => 'Kredit',
             'worker_id' => 'Xodim',
             'state' => 'Holat',

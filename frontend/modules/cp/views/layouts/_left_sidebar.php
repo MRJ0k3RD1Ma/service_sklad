@@ -23,6 +23,14 @@
                     </a>
                 </li>
 
+
+                <li>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['/cp/sale'])?>" class="dropdown-toggle no-arrow <?= Yii::$app->controller->id == 'sale' ? 'active' : ''?>">
+                        <span class="micon bi bi-list-check"></span>
+                        <span class="mtext">Shartnomalar</span>
+                    </a>
+                </li>
+
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon bi bi-gear-fill"></span>

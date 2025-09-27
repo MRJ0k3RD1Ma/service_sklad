@@ -48,6 +48,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             [['group_id', 'unit_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['created', 'updated'], 'safe'],
+            [['group_id','unit_id','price','name'],'required'],
             [['price', 'min_volume', 'volume_price'], 'number'],
             [['type'], 'in', 'range' => [self::TYPE_SERVICE, self::TYPE_PRODUCT]],
             [['name', 'image'], 'string', 'max' => 255],

@@ -18,7 +18,7 @@ class SaleSearch extends Sale
     {
         return [
             [['id', 'code_id', 'client_id', 'product_id', 'worker_id', 'register_id', 'modify_id', 'status'], 'integer'],
-            [['date', 'code', 'state', 'created', 'updated', 'address'], 'safe'],
+            [['date', 'code', 'state', 'created', 'updated', 'address','client_name'], 'safe'],
             [['price', 'debt', 'credit', 'volume', 'volume_estimated'], 'number'],
         ];
     }
@@ -42,7 +42,9 @@ class SaleSearch extends Sale
      */
     public function search($params, $formName = null)
     {
-        $query = Sale::find()->orderBy(['id'=>SORT_DESC]);
+        $query = Sale::find()->select(['sale.*'])
+            ->innerJoin('client','client.id = sale.client_id')
+            ->orderBy(['sale.id'=>SORT_DESC]);
 
         // add conditions that should always apply here
 
@@ -62,27 +64,28 @@ class SaleSearch extends Sale
         }
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'date' => $this->date,
-            'code_id' => $this->code_id,
-            'client_id' => $this->client_id,
-            'product_id' => $this->product_id,
-            'price' => $this->price,
-            'debt' => $this->debt,
-            'credit' => $this->credit,
-            'worker_id' => $this->worker_id,
-            'created' => $this->created,
-            'updated' => $this->updated,
-            'register_id' => $this->register_id,
-            'modify_id' => $this->modify_id,
-            'status' => $this->status,
-            'volume' => $this->volume,
-            'volume_estimated' => $this->volume_estimated,
+            'sale.id' => $this->id,
+            'sale.date' => $this->date,
+            'sale.code_id' => $this->code_id,
+            'sale.client_id' => $this->client_id,
+            'sale.product_id' => $this->product_id,
+            'sale.price' => $this->price,
+            'sale.debt' => $this->debt,
+            'sale.credit' => $this->credit,
+            'sale.worker_id' => $this->worker_id,
+            'sale.created' => $this->created,
+            'sale.updated' => $this->updated,
+            'sale.register_id' => $this->register_id,
+            'sale.modify_id' => $this->modify_id,
+            'sale.status' => $this->status,
+            'sale.volume' => $this->volume,
+            'sale.volume_estimated' => $this->volume_estimated,
+            'sale.state'=>$this->state,
         ]);
 
-        $query->andFilterWhere(['like', 'code', $this->code])
-            ->andFilterWhere(['like', 'state', $this->state])
-            ->andFilterWhere(['like', 'address', $this->address]);
+        $query->andFilterWhere(['like', 'sale.code', $this->code])
+            ->andFilterWhere(['like', 'client.name', $this->client_name])
+            ->andFilterWhere(['like', 'sale.address', $this->address]);
 
         return $dataProvider;
     }

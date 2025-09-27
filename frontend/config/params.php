@@ -17,7 +17,7 @@ return [
     'telegram'=>[
         'token'=>'7501127856:AAGehuiIx749E1FlkYeuxuDj9bX_9TKrwG4'
     ],
-    'service.state'=>[
+    'sale.state'=>[
         'NEW'=>'YANGI',
         'RUNNING'=>'TA`MIRLANMOQDA',
         'COMPLETED'=>'YAKUNLANGAN',

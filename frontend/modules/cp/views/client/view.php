@@ -25,26 +25,67 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::button('<span class="fa fa-money"></span> To`lov qabul qilish', ['value'=>Yii::$app->urlManager->createUrl(['/cp/client/paying','id'=>$model->id]),'class' => 'btn btn-primary md-btnupdate'],) ?>
+
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'image',
-            'type_id',
-            'name',
-            'phone',
-            'phone_two',
-            'comment',
-            'balance',
-            'status',
-            'created',
-            'updated',
-            'register_id',
-            'modify_id',
-        ],
-    ]) ?>
+            <div class="row">
+                <div class="col-md-4">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'id',
+//                            'image',
+                            [
+                                'attribute'=>'image',
+                                'value'=>function($d){
+                                    return Html::img('/upload/'.$d->image,['style'=>'height:200px;']);
+                                },
+                                'format'=>'raw',
+                            ],
+//                            'type_id',
+                            [
+                                'attribute'=>'type_id',
+                                'value'=>function($d){
+                                    return $d->type->name;
+                                }
+                            ],
+                            'name',
+                            'phone',
+                            'phone_two',
+                            'comment',
+                            'balance',
+//                            'status',
+                            [
+                                'attribute'=>'status',
+                                'value'=>function($d){
+                                    return Yii::$app->params['status'][$d->status];
+                                }
+                            ],
+                            'created',
+                            'updated',
+//                            'register_id',
+//                            'modify_id',
+                            [
+                                'attribute'=>'register_id',
+                                'value'=>function($d){
+                                    return $d->register->name;
+                                }
+                            ],
+                            [
+                                'attribute'=>'modify_id',
+                                'value'=>function($d){
+                                    return $d->modify->name;
+                                }
+                            ]
+                        ],
+                    ]) ?>
+                </div>
+                <div class="col-md-8">
+                    <p>1. sale ro'yhati</p>
+                    <p>2. Paid ro'yhati</p>
+                </div>
+            </div>
 
         </div>
     </div>
