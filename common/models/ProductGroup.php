@@ -36,10 +36,11 @@ class ProductGroup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'type'], 'required'],
+            [['name',], 'required'],
             [['status', 'register_id', 'modify_id'], 'integer'],
             [['created', 'updated'], 'safe'],
             [['type'], 'in', 'range' => ['SERVICE', 'PRODUCT']],
+            ['type','default','value'=>'SERVICE'],
             [['name', 'image'], 'string', 'max' => 255],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['register_id' => 'id']],
             [['modify_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modify_id' => 'id']],

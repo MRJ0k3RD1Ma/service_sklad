@@ -35,6 +35,8 @@
                             </a>
                         </li>
                         <li><a class="<?= (Yii::$app->controller->id == 'paid-worker') ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/paid-worker'])?>">Xodimlarga to'lovlar</a></li>
+                        <li><a class="<?= (Yii::$app->controller->id == 'paid-other') ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/paid-other'])?>">Boshqa to'lovlar</a></li>
+                        <li><a class="<?= (Yii::$app->controller->id == 'paid-other-group') ? 'active' : ''?>" href="<?= Yii::$app->urlManager->createUrl(['/cp/paid-other-group'])?>">Boshqa to'lov turlari</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

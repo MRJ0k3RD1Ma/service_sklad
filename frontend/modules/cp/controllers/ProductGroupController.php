@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use Yii;
+use yii\web\UploadedFile;
+
 /**
  * ProductGroupController implements the CRUD actions for ProductGroup model.
  */
@@ -73,6 +75,16 @@ class ProductGroupController extends Controller
             if ($model->load($this->request->post())) {
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
+                if($model->image = UploadedFile::getInstance($model,'image')){
+                    $name = 'goodsgroup/'.microtime(true).'.'.$model->image->extension;
+                    if(!file_exists(Yii::getAlias('@frontend').'/web/upload/goodsgroup/')){
+                        mkdir(Yii::getAlias('@frontend').'/web/upload/goodsgroup/', 0777, true);
+                    }
+                    $model->image->saveAs(Yii::getAlias('@frontend').'/web/upload/'.$name);
+                    $model->image = $name;
+                }else{
+                    $model->image = 'default/nophoto.png';
+                }
                 if($model->save()){
                     Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
                 }else{
@@ -99,9 +111,19 @@ class ProductGroupController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $old = $model->image;
         if ($this->request->isPost && $model->load($this->request->post())) {
              $model->modify_id = Yii::$app->user->id;
+            if($model->image = UploadedFile::getInstance($model,'image')){
+                $name = 'goodsgroup/'.microtime(true).'.'.$model->image->extension;
+                if(!file_exists(Yii::getAlias('@frontend').'/web/upload/goodsgroup/')){
+                    mkdir(Yii::getAlias('@frontend').'/web/upload/goodsgroup/', 0777, true);
+                }
+                $model->image->saveAs(Yii::getAlias('@frontend').'/web/upload/'.$name);
+                $model->image = $name;
+            }else{
+                $model->image = $old;
+            }
             if($model->save()){
                 Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
             }else{
