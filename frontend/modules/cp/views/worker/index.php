@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var common\models\search\WorkerSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Workers';
+$this->title = 'Brigadirlar';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="worker-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card-body">
             
     <p>
-         <button class="btn btn-success md-btncreate" value="<?= Url::to(['create']) ?>" type="button">Mijoz qo'shish</button>
+         <button class="btn btn-success md-btncreate" value="<?= Url::to(['create']) ?>" type="button">Brigadir qo'shish</button>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,17 +29,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'name',
+//            'id',
+//            'name',
+            [
+                'attribute'=>'name',
+                'value'=>function($d){
+                    $url = Yii::$app->urlManager->createUrl(['/cp/worker/view','id'=>$d->id]);
+                    return Html::a(Html::encode($d->name),$url);
+                },
+                'format'=>'raw',
+            ],
             'phone',
-            'description:ntext',
-            'image',
-            //'status',
-            //'created',
-            //'updated',
-            //'register_id',
+            'balance',
+//            'status',
+            [
+                'attribute'=>'status',
+                'value'=>function($d){
+                    return Yii::$app->params['status'][$d->status];
+                },
+                'filter'=>Yii::$app->params['status'],
+            ],
             //'modify_id',
-            //'balance',
+            //'register_id',
+            'updated',
+//            'created',
+//            'image',
+//            'description:ntext',
         ],
     ]); ?>
 

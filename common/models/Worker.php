@@ -45,7 +45,6 @@ class Worker extends ActiveRecord
             [['created', 'updated'], 'safe'],
             [['balance'], 'number'],
             [['name', 'phone', 'image'], 'string', 'max' => 255],
-            [['phone'], 'unique', 'message' => 'Bu telefon raqam allaqachon mavjud.'],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['register_id' => 'id']],
             [['modify_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modify_id' => 'id']],
         ];
