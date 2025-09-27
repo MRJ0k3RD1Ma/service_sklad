@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 07, 2025 at 12:30 PM
+-- Generation Time: Sep 27, 2025 at 03:33 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 7.4.33
 
@@ -48,7 +48,8 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`id`, `image`, `type_id`, `name`, `phone`, `phone_two`, `comment`, `balance`, `status`, `created`, `updated`, `register_id`, `modify_id`) VALUES
-(1, 'default/avatar.png', 1, 'Test', '(99)967-0395', '', '', '0.00', 1, '2025-08-21 00:35:26', '2025-08-21 00:35:26', NULL, NULL);
+(1, 'default/avatar.png', 1, 'Test', '(99)967-0395', '', '', '0.00', -1, '2025-08-21 00:35:26', '2025-09-27 18:08:09', 1, 1),
+(2, 'client/1758978404.3146.jpg', 1, 'Dilmurod', '(99)967-0395', '', '123213', '0.00', 1, '2025-09-07 16:24:11', '2025-09-27 18:07:51', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -72,7 +73,9 @@ CREATE TABLE `client_type` (
 
 INSERT INTO `client_type` (`id`, `name`, `status`, `created`, `updated`, `register_id`, `modify_id`) VALUES
 (1, 'Umumiy', 1, '2025-08-18 20:51:45', '2025-08-18 20:51:45', NULL, NULL),
-(2, 'Usta', 1, '2025-08-18 20:51:45', '2025-08-18 20:51:45', NULL, NULL);
+(2, 'Usta', 1, '2025-08-18 20:51:45', '2025-08-18 20:51:45', NULL, NULL),
+(3, 'testbek', -1, '2025-09-20 12:20:48', '2025-09-25 13:27:59', 1, 1),
+(4, 'ertet', -1, '2025-09-20 12:21:13', '2025-09-20 12:23:22', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -131,6 +134,15 @@ CREATE TABLE `paid_other_group` (
   `modify_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `paid_other_group`
+--
+
+INSERT INTO `paid_other_group` (`id`, `name`, `status`, `created`, `updated`, `register_id`, `modify_id`) VALUES
+(1, 'Yo\'l xarajatlari', 1, '2025-09-25 13:55:21', '2025-09-25 13:55:21', 1, 1),
+(2, 'Qaytarib berilgan pullar', 1, '2025-09-25 13:55:49', '2025-09-25 13:55:49', 1, 1),
+(3, 'Testbek', -1, '2025-09-25 13:55:58', '2025-09-25 13:57:37', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -173,10 +185,11 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`id`, `name`, `status`, `created`, `updated`, `register_id`, `modify_id`) VALUES
-(1, 'Naqd', 1, '2025-08-18 20:55:08', '2025-08-18 20:55:08', NULL, NULL),
-(2, 'Plastik', 1, '2025-08-18 20:55:08', '2025-08-18 20:55:08', NULL, NULL),
-(3, 'Click', 1, '2025-08-18 20:55:08', '2025-08-18 20:55:08', NULL, NULL),
-(4, 'Bank', 1, '2025-08-18 20:55:08', '2025-08-18 20:55:08', NULL, NULL);
+(1, 'Naqd', 1, '2025-08-18 20:55:08', '2025-09-07 16:11:30', 1, 1),
+(2, 'Plastik', 1, '2025-08-18 20:55:08', '2025-09-07 16:11:33', 1, 1),
+(3, 'Click', 1, '2025-08-18 20:55:08', '2025-09-07 16:11:35', 1, 1),
+(4, 'Bank', 1, '2025-08-18 20:55:08', '2025-09-07 16:12:39', 1, 1),
+(6, 'testbekas', -1, '2025-09-25 13:59:02', '2025-09-25 13:59:09', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -206,7 +219,8 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `type`, `name`, `group_id`, `unit_id`, `image`, `status`, `created`, `updated`, `price`, `register_id`, `modify_id`, `min_volume`, `volume_price`) VALUES
-(1, 'SERVICE', 'Stayashka', 1, NULL, 'default/nophoto.png', 1, '2025-08-21 00:32:29', '2025-08-21 00:32:29', '20000.00', NULL, NULL, NULL, NULL);
+(1, 'SERVICE', 'Stayashka', 1, 2, 'default/nophoto.png', 1, '2025-08-21 00:32:29', '2025-09-27 18:00:23', '20000.00', 1, 1, '0.00', '0.00'),
+(2, 'SERVICE', 'Testbek', 1, 1, 'goods/1758967581.8821.jpg', -1, '2025-09-27 15:05:53', '2025-09-27 18:00:04', '25000.00', 1, 1, '100.00', '1200000.00');
 
 -- --------------------------------------------------------
 
@@ -231,7 +245,10 @@ CREATE TABLE `product_group` (
 --
 
 INSERT INTO `product_group` (`id`, `name`, `status`, `image`, `type`, `created`, `updated`, `register_id`, `modify_id`) VALUES
-(1, 'Qurilish', 1, 'default/nophoto.png', 'SERVICE', '2025-08-21 00:29:26', '2025-08-21 00:29:26', NULL, NULL);
+(1, 'Qurilish', 1, 'default/nophoto.png', 'SERVICE', '2025-08-21 00:29:26', '2025-08-21 00:29:26', NULL, NULL),
+(2, 'asdasd', -1, 'goodsgroup/1758789767.7046.jpg', 'SERVICE', '2025-09-25 13:41:54', '2025-09-25 13:42:56', 1, 1),
+(3, 'tewstbek', -1, 'default/nophoto.png', 'SERVICE', '2025-09-25 13:59:26', '2025-09-25 14:00:39', 1, 1),
+(4, 'testasd', -1, 'goodsgroup/1758790848.6891.jpg', 'SERVICE', '2025-09-25 14:00:42', '2025-09-25 14:00:50', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -248,6 +265,15 @@ CREATE TABLE `product_unit` (
   `register_id` int(11) DEFAULT NULL,
   `modify_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_unit`
+--
+
+INSERT INTO `product_unit` (`id`, `name`, `status`, `created`, `updated`, `register_id`, `modify_id`) VALUES
+(1, 'Kv.m.', 1, '2025-09-24 23:26:28', '2025-09-24 23:26:28', 1, 1),
+(2, 'Kub', 1, '2025-09-24 23:27:01', '2025-09-24 23:27:01', 1, 1),
+(3, 'test', -1, '2025-09-24 23:27:29', '2025-09-24 23:29:07', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -274,7 +300,8 @@ CREATE TABLE `sale` (
   `status` int(11) DEFAULT 1,
   `volume` decimal(12,2) DEFAULT 0.00,
   `volume_estimated` decimal(12,2) DEFAULT 0.00,
-  `address` varchar(255) DEFAULT NULL
+  `address` varchar(255) DEFAULT NULL,
+  `price_per` decimal(12,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -306,8 +333,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `username`, `password`, `auth_key`, `token`, `code`, `access_token`, `created`, `updated`, `status`, `role_id`, `image`, `phone`, `chat_id`) VALUES
-(1, 'Admin', 'admin', '$2y$13$cW4FDIl.S5zCEEAl4we0FuRahZRLtTQYUz4nUHcX2k2bz6yZ9kTyy', NULL, NULL, NULL, NULL, '2024-10-10 18:51:55', '2025-08-23 17:19:34', 1, 100, 'avatar/1754908421.5906.png', '+998997317978', NULL),
-(3, 'Asadbek', 'asad', '$2y$13$bpaCEbkaFX90dfuCECiKcuvdcUqpzbCZm3u0W0fyStqHTY7cGw1Du', NULL, NULL, NULL, NULL, '2025-01-05 12:44:39', '2025-07-18 22:09:42', 1, 60, 'default/avatar.png', '+998990716699', NULL);
+(1, 'Admin', 'admin', '$2y$13$cW4FDIl.S5zCEEAl4we0FuRahZRLtTQYUz4nUHcX2k2bz6yZ9kTyy', NULL, NULL, NULL, NULL, '2024-10-10 18:51:55', '2025-09-07 16:13:44', 1, 100, 'avatar/1757243624.9893.png', '+998997317978', NULL),
+(3, 'Dilmurod', 'dilmurod', '$2y$13$rNfE6FoxNBnFeieOB/8G.ef6SNjbXQgiU.LXUr6dZsLxyPH/pXRVy', NULL, NULL, NULL, NULL, '2025-01-05 12:44:39', '2025-09-25 13:58:43', 1, 100, 'avatar/1758790723.3385.jpg', '+998999670395', NULL);
 
 -- --------------------------------------------------------
 
@@ -355,6 +382,14 @@ CREATE TABLE `worker` (
   `modify_id` int(11) DEFAULT NULL,
   `balance` decimal(12,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `worker`
+--
+
+INSERT INTO `worker` (`id`, `name`, `phone`, `description`, `image`, `status`, `created`, `updated`, `register_id`, `modify_id`, `balance`) VALUES
+(1, 'Dilmurod', '(99) 967-03-95', '', 'avatar/1758966552.7765.jpg', 1, '2025-09-27 14:46:50', '2025-09-27 14:49:12', 1, 1, '0.00'),
+(2, 'Testbek', '(99) 967-03-95', '', 'default/nophoto.png', -1, '2025-09-27 14:55:09', '2025-09-27 14:55:14', 1, 1, '0.00');
 
 --
 -- Indexes for dumped tables
@@ -521,13 +556,13 @@ ALTER TABLE `worker`
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `client_type`
 --
 ALTER TABLE `client_type`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `paid`
@@ -545,7 +580,7 @@ ALTER TABLE `paid_other`
 -- AUTO_INCREMENT for table `paid_other_group`
 --
 ALTER TABLE `paid_other_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `paid_worker`
@@ -557,25 +592,25 @@ ALTER TABLE `paid_worker`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_group`
 --
 ALTER TABLE `product_group`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '1-mahsulot, 2-xizmat', AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '1-mahsulot, 2-xizmat', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_unit`
 --
 ALTER TABLE `product_unit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sale`
@@ -599,7 +634,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -708,59 +743,6 @@ ALTER TABLE `user`
 ALTER TABLE `worker`
   ADD CONSTRAINT `FK_worker_modify_id` FOREIGN KEY (`modify_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_worker_register_id` FOREIGN KEY (`register_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- --------------------------------------------------------
-
---
--- Soddalashtirilgan biznes logika
---
-
---
--- Ishchi to'lovlarini avtomatik hisoblash uchun minimal jadval
---
-CREATE TABLE `worker_payment_calculation` (
-  `id` int(11) NOT NULL,
-  `sale_id` int(11) NOT NULL COMMENT 'Shartnoma ID',
-  `worker_id` int(11) NOT NULL COMMENT 'Ishchi ID',
-  `calculated_amount` decimal(12,2) DEFAULT 0.00 COMMENT 'Hisoblab chiqilgan summa (volume * volume_price)',
-  `is_paid` tinyint(1) DEFAULT 0 COMMENT 'To''langanmi',
-  `paid_worker_id` int(11) DEFAULT NULL COMMENT 'Haqiqiy to''lov ID',
-  `calculation_date` datetime DEFAULT current_timestamp() COMMENT 'Hisoblangan sana',
-  `status` int(11) DEFAULT 1,
-  `created` datetime DEFAULT current_timestamp(),
-  `updated` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `register_id` int(11) DEFAULT NULL,
-  `modify_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Ishchilar uchun to''lov hisoblash';
-
---
--- Indexes for worker_payment_calculation
---
-ALTER TABLE `worker_payment_calculation`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_worker_calc_sale_id` (`sale_id`),
-  ADD KEY `FK_worker_calc_worker_id` (`worker_id`),
-  ADD KEY `FK_worker_calc_paid_worker_id` (`paid_worker_id`),
-  ADD KEY `IDX_worker_calc_is_paid` (`is_paid`),
-  ADD KEY `FK_worker_calc_register_id` (`register_id`),
-  ADD KEY `FK_worker_calc_modify_id` (`modify_id`);
-
---
--- AUTO_INCREMENT for worker_payment_calculation
---
-ALTER TABLE `worker_payment_calculation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for worker_payment_calculation
---
-ALTER TABLE `worker_payment_calculation`
-  ADD CONSTRAINT `FK_worker_calc_sale_id` FOREIGN KEY (`sale_id`) REFERENCES `sale` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_worker_calc_worker_id` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_worker_calc_paid_worker_id` FOREIGN KEY (`paid_worker_id`) REFERENCES `paid_worker` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_worker_calc_register_id` FOREIGN KEY (`register_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_worker_calc_modify_id` FOREIGN KEY (`modify_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
