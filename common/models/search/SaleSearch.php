@@ -19,7 +19,7 @@ class SaleSearch extends Sale
         return [
             [['id', 'code_id', 'client_id', 'product_id', 'worker_id', 'register_id', 'modify_id', 'status'], 'integer'],
             [['date', 'code', 'state', 'created', 'updated', 'address','client_name'], 'safe'],
-            [['price', 'debt', 'credit', 'volume', 'volume_estimated'], 'number'],
+            [['price', 'debt', 'credit', 'volume', 'volume_estimated','price_worker','total_price_worker'], 'number'],
         ];
     }
 
@@ -72,6 +72,7 @@ class SaleSearch extends Sale
             'sale.price' => $this->price,
             'sale.debt' => $this->debt,
             'sale.credit' => $this->credit,
+            'sale.price_worker' => $this->price_worker,
             'sale.worker_id' => $this->worker_id,
             'sale.created' => $this->created,
             'sale.updated' => $this->updated,

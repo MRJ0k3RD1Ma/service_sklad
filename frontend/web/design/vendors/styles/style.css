@@ -4867,3 +4867,74 @@ label{
     float: left !important;
     max-width: 30% !important;
 }
+
+.pulse-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+.pulse-primary{
+    background: #1b00ff;
+}
+.pulse-wave-primary{
+    background: #1b00ff;
+}
+.pulse-danger{
+    background: #dc3545;
+}
+.pulse-wave-danger{
+    background: #dc3545;
+}
+.pulse-warning{
+    background: #ffc107;
+}
+.pulse-wave-warning{
+    background: #ffc107;
+}
+.pulse-info{
+    background: #17a2b8;
+}
+.pulse-wave-info{
+    background: #17a2b8;
+}
+.pulse-success{
+    background: #28a745;
+}
+.pulse-wave-success{
+    background: #28a745;
+}
+/* Asosiy dumaloq (har doim 10px radius) */
+.center-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+/* To‘lqin animatsiyasi */
+.pulse-wave {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    opacity: 0.5;
+    z-index: 1;
+    animation: wave 2s infinite;
+}
+
+@keyframes wave {
+    0% {
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(3); /* Tarqalish darajasi */
+        opacity: 0;          /* Tarqalib ketgach yo'qoladi */
+    }
+}

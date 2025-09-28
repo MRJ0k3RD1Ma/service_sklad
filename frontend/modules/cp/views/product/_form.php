@@ -18,7 +18,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'unit_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\ProductUnit::find()->where(['status'=>1])->all(),'id','name'),['prompt'=>'Xizmat birligini tanlang']) ?>
 
-    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'price_worker')->textInput(['maxlength' => true]) ?>
+
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-6">

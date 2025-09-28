@@ -3,6 +3,7 @@ namespace frontend\components;
 
 use common\models\Client;
 use common\models\Sale;
+use common\models\Worker;
 
 class Common extends \yii\base\Component
 {
@@ -28,29 +29,27 @@ class Common extends \yii\base\Component
         return '('.substr($phone_new,0,2).')'.substr($phone_new,2,3).'-'.substr($phone_new,5,4);
     }
 
-    public static function ClientPaid($client_id){
-        // avvalgi sotib olgan mahsulotlarining to'lovidan kamaytirish kerak.
-        $client = Client::findOne($client_id);
-        $sales = Sale::find()->where(['client_id'=>$client_id])
-            ->andWhere(['>','credit',0])
-            ->orderBy(['id'=>SORT_ASC])->all();
-        foreach($sales as $sale){
-            if($sale->credit > 0){
-                if($client->balans > $sale->credit){
-                    $sale->credit = 0;
-                    $sale->debt = $sale->price;
-                    $client->balans -= $sale->credit;
-                    $client->credit -= $sale->credit;
-                }else{
-                    $sale->credit -= $client->balans;
-                    $sale->debt += $client->balans;
-                    $client->balans -= $sale->credit;
-                    $client->credit -= $sale->credit;
-                }
-                $client->save(false);
-                $sale->save(false);
-            }
+    public static function calcPriceWorker($id){
+        $model = Worker::findOne($id);
+        if($model){
+            // barcha shartnoma bo'yicha hisoblangan pullarni yig'indisini olish
+            // barcha hisoblangan to'lovlarni yig'indisini olish
+            // workerni balansiga qoldiq summani qo'shib qo'yish
+            return true;
         }
+        return false;
+    }
+
+    public static function calcPriceClient($id){
+        $model = Client::findOne($id);
+        if($model){
+            // client bilan qilingan shartnomalarni umumiy narxini hisoblash
+            // client to'lagan pullarning umumiy narxini hisoblash
+            // clientning balansiga qolgan summani yozib qo'yish
+
+            return true;
+        }
+        return false;
     }
 
 

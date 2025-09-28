@@ -59,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'format'=>'raw',
                             ],
                             'price',
+                            'price_worker',
                             'min_volume',
                             'volume_price',
 //                            'status',

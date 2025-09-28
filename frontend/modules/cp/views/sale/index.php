@@ -30,8 +30,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
 //            'id',
-            'date',
-            'code',
+//            'date',
+//            'code',
+            [
+                 'attribute'=>'code',
+                'value'=>function($d){
+                    $url = Yii::$app->urlManager->createUrl(['/cp/sale/view','id'=>$d->id]);
+                    return Html::a('#'.Html::encode($d->code.' '.$d->date),$url);
+                },'format'=>'raw'
+            ],
 //            'code_id',
 //            'client_id',
             [
@@ -40,6 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     $url = url::toRoute(['client/view', 'id' => $model->client_id]);
                     return Html::a($model->client->name, $url);
                 },
+                'format'=>'raw',
             ],
             [
                 'attribute'=>'product_id',
@@ -57,7 +65,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'worker_id',
                 'value'=>function($model){
                     return Html::a($model->worker->name, Url::to(['worker/view', 'id' => $model->worker_id]));
-                }
+                },
+                'format'=>'raw'
             ],
             //'state',
             [
@@ -66,6 +75,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Yii::$app->params['sale.state'][$model->state];
                 },
                 'filter'=>Yii::$app->params['sale.state']
+            ],
+            [
+                'attribute'=>'status',
+                'value'=>function($model){
+                    return Yii::$app->params['status'][$model->status];
+                },
+                'filter'=>Yii::$app->params['status']
             ],
             //'created',
             //'updated',

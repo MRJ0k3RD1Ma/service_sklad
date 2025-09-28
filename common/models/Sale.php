@@ -39,6 +39,7 @@ class Sale extends ActiveRecord
     public const STATE_NEW     = 'NEW';
     public const STATE_RUNNING = 'RUNNING';
     public const STATE_DONE    = 'DONE';
+    public const STATE_CANCELLED    = 'CANCELLED';
 
     public $client_name;
     public static function tableName()
@@ -50,8 +51,8 @@ class Sale extends ActiveRecord
     {
         return [
             [['client_id', 'product_id', 'worker_id','price_per'], 'required'],
-            [['client_id', 'product_id', 'worker_id', 'code_id', 'register_id', 'modify_id', 'status'], 'integer'],
-            [['price', 'debt', 'credit', 'volume', 'volume_estimated'], 'number'],
+            [['client_id', 'product_id', 'worker_id', 'code_id', 'register_id', 'modify_id', 'status',], 'integer'],
+            [['price', 'debt', 'credit', 'volume', 'volume_estimated','min_volume','min_price','price_worker','total_price_worker'], 'number'],
             [['date', 'created', 'updated','client_name'], 'safe'],
             [['code', 'address'], 'string', 'max' => 255],
             ['state', 'in', 'range' => [self::STATE_NEW, self::STATE_RUNNING, self::STATE_DONE]],
@@ -72,13 +73,14 @@ class Sale extends ActiveRecord
             'client_name' => 'Mijoz ismi',
             'code' => 'Kod',
             'code_id' => 'Kod ID',
+            'price_worker'=>'Brigadirga birlik narx',
             'client_id' => 'Mijoz',
             'product_id' => 'Xizmat',
             'price' => 'Umumiy xizmat narxi',
-            'price_per'=>'Kelishilgan narxi',
+            'price_per'=>'Kelishilgan birlik narxi',
             'debt' => 'Debit',
             'credit' => 'Kredit',
-            'worker_id' => 'Xodim',
+            'worker_id' => 'Brigadir',
             'state' => 'Holat',
             'created' => 'Kiritildi',
             'updated' => 'O`zgartirildi',
@@ -88,6 +90,8 @@ class Sale extends ActiveRecord
             'volume' => 'Real Hajm',
             'volume_estimated' => 'Taxminiy hajm',
             'address' => 'Manzil',
+            'min_price' => 'Minimal to`lov',
+            'min_volume' => 'Minimal hajm',
         ];
     }
 
@@ -97,6 +101,7 @@ class Sale extends ActiveRecord
             self::STATE_NEW => 'NEW',
             self::STATE_RUNNING => 'RUNNING',
             self::STATE_DONE => 'DONE',
+            self::STATE_CANCELLED => 'CANCELLED',
         ];
     }
 

@@ -19,7 +19,7 @@ class ProductSearch extends Product
         return [
             [['id', 'group_id', 'unit_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['type', 'name', 'image', 'created', 'updated'], 'safe'],
-            [['price', 'min_volume', 'volume_price'], 'number'],
+            [['price', 'min_volume', 'volume_price','price_worker'], 'number'],
         ];
     }
 

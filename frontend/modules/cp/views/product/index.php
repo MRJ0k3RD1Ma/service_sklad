@@ -60,6 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'image',
             'price',
+            'price_worker',
             'created',
 //            'status',
             [

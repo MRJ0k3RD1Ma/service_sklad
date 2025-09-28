@@ -21,13 +21,12 @@ use yii\widgets\ActiveForm;
                 return $d->name.' - '.$d->phone;
             }),['prompt'=>'Mijozni tanlang']) ?>
 
+            <?= $form->field($model, 'price_per')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'min_volume')->textInput(['maxlength' => true]) ?>
 
 
-            <?= $form->field($model, 'worker_id')->dropDownList(\yii\helpers\ArrayHelper::map(
-                    \common\models\Worker::find()->where(['status'=>1])->all(),'id','name'
-            ),['prompt'=>'Brigadirni tanlang']) ?>
+            <?= $form->field($model, 'volume_estimated')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-md-6">
 
@@ -35,14 +34,24 @@ use yii\widgets\ActiveForm;
                 \common\models\Product::find()->where(['status'=>1])->all(),'id','name'
             ),['prompt'=>'Xizmatni tanlang']) ?>
 
-            <?= $form->field($model, 'price_per')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'volume_estimated')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'worker_id')->dropDownList(\yii\helpers\ArrayHelper::map(
+                \common\models\Worker::find()->where(['status'=>1])->all(),'id','name'
+            ),['prompt'=>'Brigadirni tanlang']) ?>
+
+            <?= $form->field($model, 'price_worker')->textInput(['maxlength' => true,]) ?>
+
+
+            <?= $form->field($model, 'min_price')->textInput(['maxlength' => true]) ?>
+
+
             <?= $form->field($model, 'price')->textInput(['maxlength' => true,'disabled'=>true]) ?>
+
 
         </div>
     </div>
 
+    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
 
 
 
@@ -66,7 +75,11 @@ $this->registerJs("
     }
     $('#sale-product_id').change(function(){
         $.get('{$url}?id='+$('#sale-product_id').val()).done(function(data){
-            $('#sale-price_per').val(data);
+            data = JSON.parse(data);
+            $('#sale-price_per').val(data.price);
+            $('#sale-min_price').val(data.min_price);
+            $('#sale-min_volume').val(data.min_volume);
+            $('#sale-price_worker').val(data.price_worker);
             updatePrice();
         })
     });

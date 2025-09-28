@@ -22,6 +22,22 @@ return [
         'RUNNING'=>'TA`MIRLANMOQDA',
         'COMPLETED'=>'YAKUNLANGAN',
     ],
+    'sale.log'=>[
+        'text'=>[
+            'NEW'=>'Shartnoma yaratildi',
+            'RUNNING'=>'Shartnoma bo`yicha ish boshlandi',
+            'UPDATED'=>'Shartnomaga o`zgartirish kiritildi',
+            'COMPLETED'=>'Shartnoma bo`yicha ish bajarib bo`lindi',
+            'CANCELLED'=>'Sharntoma bekor qilindi'
+        ],
+        'color'=>[
+            'NEW'=>'#17a2b8',
+            'RUNNING'=>'#ffc107',
+            'UPDATED'=>'#1b00ff',
+            'COMPLETED'=>'#28a745',
+            'CANCELLED'=>'#dc3545'
+        ]
+    ],
 
     'layout'=>[
         'magazine'=>'Dokonlar uchun',
