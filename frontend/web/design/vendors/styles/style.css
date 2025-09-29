@@ -2876,8 +2876,8 @@ body.IE .login-wrap .container,body.IE .register-page-wrap .container {
 .timeline ul li {
     position: relative;
     padding-left: 180px;
-    padding-top: 20px;
-    padding-bottom: 30px
+    padding-top: 10px;
+    padding-bottom: 0px;
 }
 
 .timeline ul li:before {

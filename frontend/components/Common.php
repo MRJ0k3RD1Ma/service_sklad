@@ -2,6 +2,8 @@
 namespace frontend\components;
 
 use common\models\Client;
+use common\models\Paid;
+use common\models\PaidWorker;
 use common\models\Sale;
 use common\models\Worker;
 
@@ -33,8 +35,12 @@ class Common extends \yii\base\Component
         $model = Worker::findOne($id);
         if($model){
             // barcha shartnoma bo'yicha hisoblangan pullarni yig'indisini olish
+            $sale_price = Sale::find()->where(['status'=>1,'state'=>'DONE','worker_id'=>$model->id])->sum('total_price_worker');
+            $paid_price = PaidWorker::find()->where(['status'=>1,'worker_id'=>$model->id])->sum('price');
             // barcha hisoblangan to'lovlarni yig'indisini olish
             // workerni balansiga qoldiq summani qo'shib qo'yish
+            $model->balance = $sale_price - $paid_price;
+            $model->save(false);
             return true;
         }
         return false;
@@ -44,9 +50,12 @@ class Common extends \yii\base\Component
         $model = Client::findOne($id);
         if($model){
             // client bilan qilingan shartnomalarni umumiy narxini hisoblash
+            $sale_price = Sale::find()->where(['status'=>1,'state'=>'DONE','client_id'=>$model->id])->sum('price');
             // client to'lagan pullarning umumiy narxini hisoblash
+            $paid_price = Paid::find()->where(['status'=>1,'client_id'=>$model->id])->sum('price');
             // clientning balansiga qolgan summani yozib qo'yish
-
+            $model->balance = $paid_price - $sale_price;
+            $model->save(false);
             return true;
         }
         return false;

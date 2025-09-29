@@ -206,8 +206,12 @@ class SaleController extends Controller
         $model = $this->findModel($id);
         if($model->load($this->request->post())){
             $model->modify_id = Yii::$app->user->id;
+            if($model->volume < $model->min_volume){
+                $model->total_price_worker = $model->min_price;
+            }else{
+                $model->total_price_worker = $model->price_worker * $model->volume;
+            }
             $model->price = $model->volume * $model->price_per;
-            $model->total_price_worker = $model->price_worker * $model->volume;
             $model->state = 'DONE';
             $model->save(false);
             $log = new SaleLog();

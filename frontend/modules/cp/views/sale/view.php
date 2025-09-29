@@ -42,9 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php }?>
     <div class="card" style="margin-top:15px;">
         <div class="card-body">
-            <?php if($model->state != 'DONE'){?>
-
             <p>
+                <?php if($model->state != 'DONE'){?>
 
                 <?= Html::a('O`zgartirish', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a('O`chirish', ['delete', 'id' => $model->id], [
@@ -60,8 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?= Html::button('ISH BAJARILDI (TUGATISH)', ['class' => 'btn btn-success md-btnupdate','value'=>Yii::$app->urlManager->createUrl(['/cp/sale/done','id'=>$model->id])]) ?>
                 <?php }?>
                 <?= Html::a('SHARTNOMANI BEKOR QILISH', ['closecontact', 'id' => $model->id], ['class' => 'btn btn-danger','data-method'=>'post','data-confirm'=>'Siz rostdan ham ushbu shartnomani bekor qilmoqchimisiz?']) ?>
+                <?php }?>
+                <?= Html::button('To`lov',['class'=>'btn btn-info md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/sale/paying','id'=>$model->id])])?>
             </p>
-            <?php }?>
 
             <div class="row">
                 <div class="col-md-4">
@@ -73,8 +73,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             'code',
 //                            'code_id',
 //                            'client_id',
-                        'price_worker',
-                            'total_price_worker',
+//                        'price_worker',
+//                            'total_price_worker',
                             [
                                 'attribute'=>'client_id',
                                 'value'=>function($d){
@@ -112,7 +112,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $d->worker->name;
                                 }
                             ],
-                            'state',
+//                            'state',
+                            [
+                                'attribute'=>'state',
+                                'value'=>function($d){
+                                    return Yii::$app->params['sale.state'][$d->state];
+                                }
+                            ],
                             'created',
                             'updated',
 //                            'register_id',
@@ -169,25 +175,37 @@ $this->params['breadcrumbs'][] = $this->title;
                     <table class="table table-bordered table-striped">
                         <tbody>
                         <tr>
-                            <th>Xizmat nomi</th>
+                            <th>Brigadir</th>
                             <th>Birlik uchun narx</th>
                             <th>Taxminiy hajm</th>
                             <th>Reaj hajm</th>
                             <th>Umumiy narxi</th>
                         </tr>
                         <tr>
-                            <td><?= $model->product->name?></td>
-                            <td><?= $model->price_per?></td>
+                            <td><?= $model->worker->name?></td>
+                            <td><?= $model->price_worker?></td>
                             <td><?= $model->volume_estimated?></td>
                             <td><?= $model->volume?></td>
-                            <td><?= $model->price?></td>
+                            <td><?= $model->total_price_worker?></td>
                         </tr>
                         </tbody>
                     </table>
-                    ishchi ma'lumoti
-                    <p>1. Shartnomaning qo'shimcha ma'lumotlari ro'yhati</p>
-                    <p>2. Shartnomaning hisoblangan pullari haqida ma'lumotlari</p>
-                    <p>2. Shartnoma loglari</p>
+                    <hr>
+                    <h4>Xizmat narxi va minimallar:</h4>
+                    <table class="table table-bordered table-striped">
+                        <tbody>
+                            <tr>
+                                <th>Xizmat nomi</th>
+                                <th>Minimal hajm</th>
+                                <th>Minimal narx</th>
+                            </tr>
+                            <tr>
+                                <td><?= $model->product->name ?></td>
+                                <td><?= $model->min_volume?></td>
+                                <td><?= $model->min_price?></td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <h4>Shartnoma o'zgarishlari</h4>
                     <div class="row">
                         <div class="col-md-12">

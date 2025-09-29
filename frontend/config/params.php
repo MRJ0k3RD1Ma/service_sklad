@@ -20,7 +20,8 @@ return [
     'sale.state'=>[
         'NEW'=>'YANGI',
         'RUNNING'=>'TA`MIRLANMOQDA',
-        'COMPLETED'=>'YAKUNLANGAN',
+        'DONE'=>'YAKUNLANGAN',
+        'CANCELLED'=>'BEKOR QILINGAN',
     ],
     'sale.log'=>[
         'text'=>[
