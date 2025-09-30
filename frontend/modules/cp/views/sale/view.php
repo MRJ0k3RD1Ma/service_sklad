@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?php }?>
                 <?= Html::a('SHARTNOMANI BEKOR QILISH', ['closecontact', 'id' => $model->id], ['class' => 'btn btn-danger','data-method'=>'post','data-confirm'=>'Siz rostdan ham ushbu shartnomani bekor qilmoqchimisiz?']) ?>
                 <?php }?>
-                <?= Html::button('To`lov',['class'=>'btn btn-info md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/sale/paying','id'=>$model->id])])?>
+                <?= Html::button('To`lov qabul qilish',['class'=>'btn btn-info md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/sale/paying','id'=>$model->id])])?>
             </p>
 
             <div class="row">
@@ -149,6 +149,42 @@ $this->params['breadcrumbs'][] = $this->title;
                             'address',
                         ],
                     ]) ?>
+
+
+                    <h4>Ushbu shartnoma bo'yicha to'langan to'lovlar</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Sana</th>
+                                    <th>Summa</th>
+                                    <th>To'lov turi</th>
+                                    <th>Izoh</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach (\common\models\Paid::find()->where(['sale_id'=>$model->id])->where(['status'=>1])->orderBy(['id'=>SORT_DESC])->all() as $key=>$item):?>
+
+                                    <tr>
+                                        <td><?= $key+1?></td>
+                                        <td><?= $item->date?></td>
+                                        <td><?= $item->price?></td>
+                                        <td><?= $item->payment->name?></td>
+                                        <td><?= $item->description?></td>
+                                        <td>
+                                            <button class="btn btn-primary md-btnupdate" value="<?= Yii::$app->urlManager->createUrl(['/cp/sale/updatepaying','id'=>$item->id])?>"><span class="fa fa-edit"></span></button>
+                                            <a class="btn btn-danger" href="<?= Yii::$app->urlManager->createUrl(['/cp/sale/deletepaying','id'=>$item->id])?>" data-method="post" data-confirm="Siz rostdan ham ushbu elementni o`chirmoqchimisiz?"><span class="fa fa-trash"></span></a>
+                                        </td>
+                                    </tr>
+
+
+                                <?php endforeach;?>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
                 <div class="col-md-8">
                     <h4>Mijoz bilan kelishuv ma'lumotlari</h4>

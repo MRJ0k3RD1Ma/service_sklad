@@ -2,6 +2,7 @@
 
 namespace frontend\modules\cp\controllers;
 
+use common\models\Paid;
 use common\models\Product;
 use common\models\Sale;
 use common\models\SaleLog;
@@ -230,6 +231,26 @@ class SaleController extends Controller
         ]);
     }
 
+    public function actionPaying($id)
+    {
+        $model = new Paid();
+        $sale = $this->findModel($id);
+        if($model->load($this->request->post())){
+            $model->modify_id = Yii::$app->user->id;
+            $model->register_id = Yii::$app->user->id;
+            $model->sale_id = $id;
+            $model->client_id = $sale->client_id;
+            $model->save(false);
+            Common::calcPriceClient($model->client_id);
+            Yii::$app->session->setFlash('success','To`lov qabul qilindi');
+            return $this->redirect(['view', 'id' => $id]);
+        }
+        return $this->renderAjax('_paying', [
+            'model'=>$model,
+            'sale'=>$sale
+        ]);
+    }
+
     /**
      * Deletes an existing Sale model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -260,4 +281,39 @@ class SaleController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+    public function actionDeletepaying($id)
+    {
+        $model = Paid::findOne($id);
+        if($model){
+            $sale = $model->sale;
+            $model->status = -1;
+            $model->save(false);
+            Common::calcPriceClient($sale->client_id);
+            Yii::$app->session->setFlash('success','Qo`shilgan to`lov o`chirildi');
+            return $this->redirect(['view', 'id' => $sale->id]);
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUpdatepaying($id){
+        $model = Paid::findOne($id);
+        if($model){
+            $sale = $model->sale;
+            if($model->load($this->request->post())){
+                $model->modify_id = Yii::$app->user->id;
+                $model->save(false);
+                Common::calcPriceClient($model->client_id);
+                Yii::$app->session->setFlash('success','To`lov ma`lumotlarni o`zgartirildi');
+                return $this->redirect(['view', 'id' => $id]);
+            }
+            return $this->renderAjax('_paying', [
+                'model'=>$model,
+                'sale'=>$sale
+            ]);
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
 }

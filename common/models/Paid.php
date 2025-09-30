@@ -17,6 +17,7 @@ use yii\db\ActiveRecord;
  * @property int|null $status
  * @property string|null $created
  * @property string|null $updated
+ * @property string|null $description
  * @property int|null $register_id
  * @property int|null $modify_id
  *
@@ -39,7 +40,7 @@ class Paid extends ActiveRecord
             [['price', 'payment_id'], 'required'],
             [['sale_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['price'], 'number'],
-            [['date', 'created', 'updated'], 'safe'],
+            [['date', 'created', 'updated','description'], 'safe'],
             [['client_id'], 'exist', 'skipOnError' => true, 'targetClass' => Client::class, 'targetAttribute' => ['client_id' => 'id']],
             [['sale_id'], 'exist', 'skipOnError' => true, 'targetClass' => Sale::class, 'targetAttribute' => ['sale_id' => 'id']],
             [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::class, 'targetAttribute' => ['payment_id' => 'id']],
@@ -56,6 +57,7 @@ class Paid extends ActiveRecord
             'price' => 'Summasi',
             'payment_id' => 'To‘lov turi',
             'client_id' => 'Mijoz',
+            'description' => 'Izoh',
             'date' => 'Sana',
             'status' => 'Status',
             'created' => 'Kiritildi',

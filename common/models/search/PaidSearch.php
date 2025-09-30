@@ -19,7 +19,7 @@ class PaidSearch extends Paid
         return [
             [['id', 'sale_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['price'], 'number'],
-            [['date', 'created', 'updated'], 'safe'],
+            [['date', 'created', 'updated','description'], 'safe'],
         ];
     }
 
@@ -74,6 +74,7 @@ class PaidSearch extends Paid
             'register_id' => $this->register_id,
             'modify_id' => $this->modify_id,
         ]);
+        $query->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;
     }
