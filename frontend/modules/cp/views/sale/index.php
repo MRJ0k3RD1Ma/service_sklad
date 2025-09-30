@@ -66,7 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value'=>function($model){
                     return Html::a($model->worker->name, Url::to(['worker/view', 'id' => $model->worker_id]));
                 },
-                'format'=>'raw'
+                'format'=>'raw',
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Worker::find()->where(['status'=>1])->all(),'id','name')
+
             ],
             //'state',
             [

@@ -4,6 +4,7 @@ namespace frontend\modules\cp\controllers;
 
 use common\models\Product;
 use common\models\search\ProductSearch;
+use common\models\search\SaleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -57,8 +58,14 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+        $searchSaleModel = new SaleSearch();
+        $searchSaleModel->product_id = $id;
+        $dataSaleProvider = $searchSaleModel->search($this->request->queryParams);
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchSaleModel' => $searchSaleModel,
+            'dataSaleProvider' => $dataSaleProvider,
         ]);
     }
 

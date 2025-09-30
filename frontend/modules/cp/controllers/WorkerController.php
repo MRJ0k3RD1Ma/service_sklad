@@ -2,6 +2,10 @@
 
 namespace frontend\modules\cp\controllers;
 
+use common\models\PaidWorker;
+use common\models\search\PaidSearch;
+use common\models\search\PaidWorkerSearch;
+use common\models\search\SaleSearch;
 use common\models\Worker;
 use common\models\search\WorkerSearch;
 use yii\web\Controller;
@@ -57,8 +61,21 @@ class WorkerController extends Controller
      */
     public function actionView($id)
     {
+        $searchSaleModel = new SaleSearch();
+        $searchSaleModel->worker_id = $id;
+        $dataSaleProvider = $searchSaleModel->search($this->request->queryParams);
+
+        $searchPaidModel = new PaidWorkerSearch();
+        $searchPaidModel->worker_id = $id;
+        $dataPaidProvider = $searchPaidModel->search($this->request->queryParams);
+
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'searchSaleModel' => $searchSaleModel,
+            'dataSaleProvider' => $dataSaleProvider,
+            'searchPaidModel' => $searchPaidModel,
+            'dataPaidProvider' => $dataPaidProvider,
         ]);
     }
 

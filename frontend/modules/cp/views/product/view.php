@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use yii\helpers\Url;
 /** @var yii\web\View $this */
 /** @var common\models\Product $model */
 
@@ -89,7 +89,70 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]) ?>
                 </div>
                 <div class="col-md-8">
-                    <p>1. Salelar ro'yhati</p>
+                    <h5>Ushbu xizmat ko'rsatilgan shartnomalar ro'yhati</h5>
+                    <?= \yii\grid\GridView::widget([
+                        'dataProvider' => $dataSaleProvider,
+                        'filterModel' => $searchSaleModel,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
+
+//            'id',
+//            'date',
+//            'code',
+                            [
+                                'attribute'=>'code',
+                                'value'=>function($d){
+                                    $url = Yii::$app->urlManager->createUrl(['/cp/sale/view','id'=>$d->id]);
+                                    return Html::a('#'.Html::encode($d->code.' '.$d->date),$url);
+                                },'format'=>'raw'
+                            ],
+//            'code_id',
+//            'client_id',
+                            [
+                                'attribute'=>'client_id',
+                                'value'=>function($d){
+                                    $url = Yii::$app->urlManager->createUrl(['/cp/client/view','id'=>$d->id]);
+                                    return Html::a(Html::encode($d->client->name),$url);
+                                },
+                                'format'=>'raw'
+                            ],
+                            [
+                                'attribute'=>'product_id',
+                                'value'=>function($model){
+                                    return $model->product->name;
+                                },
+                                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Product::find()->where(['status'=>1])->all(),'id','name')
+                            ],
+                            //'product_id',
+                            'price',
+                            //'debt',
+                            'credit',
+//            'worker_id',
+                            [
+                                'attribute'=>'worker_id',
+                                'value'=>function($model){
+                                    return Html::a($model->worker->name, Url::to(['worker/view', 'id' => $model->worker_id]));
+                                },
+                                'format'=>'raw'
+                            ],
+                            //'state',
+                            [
+                                'attribute'=>'state',
+                                'value'=>function($model){
+                                    return Yii::$app->params['sale.state'][$model->state];
+                                },
+                                'filter'=>Yii::$app->params['sale.state']
+                            ],
+                            [
+                                'attribute'=>'status',
+                                'value'=>function($model){
+                                    return Yii::$app->params['status'][$model->status];
+                                },
+                                'filter'=>Yii::$app->params['status']
+                            ],
+
+                        ],
+                    ]); ?>
                 </div>
             </div>
 
