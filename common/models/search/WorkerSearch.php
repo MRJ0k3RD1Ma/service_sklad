@@ -11,6 +11,7 @@ use common\models\Worker;
  */
 class WorkerSearch extends Worker
 {
+    public $balanceType;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class WorkerSearch extends Worker
     {
         return [
             [['id', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['name', 'phone', 'description', 'image', 'created', 'updated'], 'safe'],
+            [['name', 'phone', 'description', 'image', 'created', 'updated','balanceType'], 'safe'],
             [['balance'], 'number'],
         ];
     }
@@ -59,6 +60,12 @@ class WorkerSearch extends Worker
         }
         if($this->status == null){
             $this->status = 1;
+        }
+        if($this->balanceType == 'credit'){
+            $query->where(['>','balance',0]);
+        }
+        if($this->balanceType == 'debt'){
+            $query->where(['<','balance',0]);
         }
         // grid filtering conditions
         $query->andFilterWhere([

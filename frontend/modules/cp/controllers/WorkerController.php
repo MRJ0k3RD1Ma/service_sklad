@@ -4,6 +4,7 @@ namespace frontend\modules\cp\controllers;
 
 use common\models\Paid;
 use common\models\PaidWorker;
+use common\models\search\ClientSearch;
 use common\models\search\PaidSearch;
 use common\models\search\PaidWorkerSearch;
 use common\models\search\SaleSearch;
@@ -47,6 +48,29 @@ class WorkerController extends Controller
     public function actionIndex()
     {
         $searchModel = new WorkerSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCredit()
+    {
+        $searchModel = new WorkerSearch();
+        $searchModel->balanceType = 'credit';
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionDebt()
+    {
+        $searchModel = new WorkerSearch();
+        $searchModel->balanceType = 'debt';
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
