@@ -81,7 +81,7 @@ AppAsset::register($this);
                 </div>
             </div>
             <div class="footer-wrap pd-20 mb-20 card-box">
-                DriveService.UZ - <a href="http://milliondastur.uz" target="_blank">Dilmurod Allabergenov</a> All rights reserved &copy;<?= date('Y')?>
+                OKSERVICE.UZ - <a href="http://milliondastur.uz" target="_blank">Dilmurod Allabergenov</a> All rights reserved &copy;<?= date('Y')?>
             </div>
         </div>
 

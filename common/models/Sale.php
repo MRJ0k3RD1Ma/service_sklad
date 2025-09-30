@@ -50,7 +50,7 @@ class Sale extends ActiveRecord
     public function rules()
     {
         return [
-            [['client_id', 'product_id', 'worker_id','price_per'], 'required'],
+            [['client_id', 'product_id', 'worker_id','price_per','price','min_volume','min_price','date','address'], 'required'],
             [['client_id', 'product_id', 'worker_id', 'code_id', 'register_id', 'modify_id', 'status',], 'integer'],
             [['price', 'debt', 'credit', 'volume', 'volume_estimated','min_volume','min_price','price_worker','total_price_worker'], 'number'],
             [['date', 'created', 'updated','client_name'], 'safe'],

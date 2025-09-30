@@ -36,6 +36,8 @@ class ProductUnit extends \yii\db\ActiveRecord
         return [
             [['status', 'register_id', 'modify_id'], 'integer'],
             [['created', 'updated'], 'safe'],
+            [['name'],'required'],
+
             [['name'], 'string', 'max' => 255],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['register_id' => 'id']],
             [['modify_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['modify_id' => 'id']],

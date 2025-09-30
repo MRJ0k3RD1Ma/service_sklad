@@ -37,7 +37,7 @@ class Paid extends ActiveRecord
     public function rules()
     {
         return [
-            [['price', 'payment_id'], 'required'],
+            [['price', 'payment_id','client_id','date'], 'required'],
             [['sale_id', 'payment_id', 'client_id', 'status', 'register_id', 'modify_id'], 'integer'],
             [['price'], 'number'],
             [['date', 'created', 'updated','description'], 'safe'],
@@ -92,15 +92,19 @@ class Paid extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'modify_id']);
     }
 
-    public static function getMonths(){
-        return [];
-    }
 
-    public static function getYearlyData(){
-        return [];
-    }
-
-    public static function getTopProductsData(){
-        return [];
+    public static function getYearlyData($year){
+        $month = Yii::$app->params['month'];
+        $res = [];
+        foreach ($month as $key => $value) {
+            if($value < 10){
+                $m = '0'.$key;
+            }
+            $res[$key] = static::find()->where(['status'=>1])->andFilterWhere(['like','date',$year.'-'.$m.'-'])->sum('price');
+            if(!$res[$key]){
+                $res[$key] = 0;
+            }
+        }
+        return array_values($res);
     }
 }

@@ -4,27 +4,25 @@ $this->registerJsFile('@web/design/src/plugins/apexcharts/apexcharts.min.js', ['
 $this->registerCssFile('@web/design/src/plugins/apexcharts/apexcharts.min.css', ['depends' => [\yii\web\JqueryAsset::className()]]);
 ?>
 
-<?php $cnt = 0;
-
-if($cnt > 0){?>
-<div class="row pb-10">
-    <div class="col-xl-12 col-lg-12 col-md-12 mb-10">
-        <div class="alert alert-primary" role="alert">
-            <a href="<?= Yii::$app->urlManager->createUrl(['/cp/visit/notprinted'])?>">Sizda hozr tugallangan va hisoblashilmagan <b><?= $cnt?> ta</b> tashriflar bor!</a>
-        </div>
-    </div>
-</div>
-<?php }?>
-
 <div class="row pb-10">
     <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
         <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
             <div class="card-box height-100-p widget-style3">
                 <div class="d-flex flex-wrap">
                     <div class="widget-data">
-                        <div class="weight-700 font-24 text-dark"><?= number_format(round(\common\models\Paid::find()->where(['date'=>date('Y-m-d'),'status'=>1])->sum('price'),0),0,'.',' ')?> so'm</div>
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                    round(
+                                            \common\models\Paid::find()
+                                                ->where(['status'=>1])
+                                                ->andFilterWhere(['like','date',date('Y-m-')])
+                                                ->sum('price')
+                                            ,0
+
+                                    ),0,'.',' ')
+                            ?> so'm</div>
                         <div class="font-14 text-secondary weight-500">
-                            Bugungi tushum
+                            (<?= Yii::$app->params['month'][intval(date('m'))]?>) tushum
                         </div>
                     </div>
                     <div class="widget-icon">
@@ -36,70 +34,220 @@ if($cnt > 0){?>
             </div>
         </a>
     </div>
+
     <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
-        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=> date('Y-m-01'),'PaidSearch[period_end]'=>date('Y-m-d')])?>">
-        <div class="card-box height-100-p widget-style3">
-            <div class="d-flex flex-wrap">
-                <div class="widget-data">
-                    <div class="weight-700 font-24 text-dark"><?= number_format(round(\common\models\Paid::find()->where(['status'=>1])->andFilterWhere(['like','date',date('Y-m-')])->sum('price'),0),0,'.',' ')?> so'm</div>
-                    <div class="font-14 text-secondary weight-500">
-                        Bu oydagi tushum
+        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
+            <div class="card-box height-100-p widget-style3">
+                <div class="d-flex flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                    round(
+
+                                        \common\models\PaidOther::find()->where(['status'=>1,'type'=>'INCOME'])
+                                            ->andFilterWhere(['like','paid_date',date('Y-m-')])
+                                            ->sum('price')
+                                            ,0
+
+                                    ),0,'.',' ')
+                            ?> so'm</div>
+                        <div class="font-14 text-secondary weight-500">
+                            (<?= Yii::$app->params['month'][intval(date('m'))]?>) Ustavga kiritilgan mablag'
+                        </div>
                     </div>
-                </div>
-                <div class="widget-icon">
-                    <div class="icon" data-color="#ff5b5b">
-                        <span class="icon-copy fa fa-money"></span>
+                    <div class="widget-icon">
+                        <div class="icon" data-color="#00eccf">
+                            <i class="icon-copy dw dw-24-hours"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </a>
     </div>
+
     <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
-        <div class="card-box height-100-p widget-style3">
-            <div class="d-flex flex-wrap">
-                <div class="widget-data">
-                    <div class="weight-700 font-24 text-dark">
-                        <?php
-                        $sale = 0;
-                        echo number_format(round($sale,0),0,'.',' ');
-                        ?> so'm
+        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
+            <div class="card-box height-100-p widget-style3">
+                <div class="d-flex flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                round(
+
+                                    \common\models\PaidOther::find()->where(['status'=>1,'type'=>'OUTCOME'])
+                                        ->andFilterWhere(['like','paid_date',date('Y-m-')])
+                                        ->sum('price')
+                                    ,0
+
+                                ),0,'.',' ')
+                            ?> so'm</div>
+                        <div class="font-14 text-secondary weight-500">
+                            (<?= Yii::$app->params['month'][intval(date('m'))]?>) Boshqa xarajatlar
+                        </div>
                     </div>
-                    <div class="font-14 text-secondary weight-500">
-                        Bugun to'lanishi kerak
-                    </div>
-                </div>
-                <div class="widget-icon">
-                    <div class="icon">
-                        <i class="icon-copy dw dw-24-hours"
-                            aria-hidden="true"></i>
+                    <div class="widget-icon">
+                        <div class="icon" data-color="#00eccf">
+                            <i class="icon-copy dw dw-24-hours"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     </div>
+
     <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
-        <div class="card-box height-100-p widget-style3">
-            <div class="d-flex flex-wrap">
-                <div class="widget-data">
-                    <div class="weight-700 font-24 text-dark">
-                        <?php
-                            $sale = 0;
-                            echo number_format(round($sale,0),0,'.',' ');
-                        ?> so'm
+        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
+            <div class="card-box height-100-p widget-style3">
+                <div class="d-flex flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                round(
+
+                                    \common\models\PaidWorker::find()->where(['status'=>1])
+                                        ->andFilterWhere(['like','date',date('Y-m-')])
+                                        ->sum('price')
+                                    ,0
+
+                                ),0,'.',' ')
+                            ?> so'm</div>
+                        <div class="font-14 text-secondary weight-500">
+                            (<?= Yii::$app->params['month'][intval(date('m'))]?>) Brigaderlarga berildi
+                        </div>
                     </div>
-                    <div class="font-14 text-secondary weight-500">Jami qarzdorlik</div>
-                </div>
-                <div class="widget-icon">
-                    <div class="icon" data-color="#09cc06">
-                        <i class="icon-copy fa fa-credit-card" aria-hidden="true"></i>
+                    <div class="widget-icon">
+                        <div class="icon" data-color="#00eccf">
+                            <i class="icon-copy dw dw-24-hours"></i>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
+    </div>
+
+
+    <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
+        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
+            <div class="card-box height-100-p widget-style3">
+                <div class="d-flex flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                round(
+
+                                    \common\models\Sale::find()->where(['status'=>1,'state'=>'DONE'])
+                                        ->andFilterWhere(['like','updated',date('Y-m-')])
+                                        ->count('id')
+                                    ,0
+
+                                ),0,'.',' ')
+                            ?> ta</div>
+                        <div class="font-14 text-secondary weight-500">
+                            (<?= Yii::$app->params['month'][intval(date('m'))]?>) Tugallangan ishlar
+                        </div>
+                    </div>
+                    <div class="widget-icon">
+                        <div class="icon" data-color="#00eccf">
+                            <i class="icon-copy dw dw-24-hours"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
+        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
+            <div class="card-box height-100-p widget-style3">
+                <div class="d-flex flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                round(
+
+                                    \common\models\Sale::find()->where(['status'=>1])
+                                        ->andFilterWhere(['like','date',date('Y-m-')])
+                                        ->count('id')
+                                    ,0
+
+                                ),0,'.',' ')
+                            ?> ta</div>
+                        <div class="font-14 text-secondary weight-500">
+                            (<?= Yii::$app->params['month'][intval(date('m'))]?>) Barcha ishlar
+                        </div>
+                    </div>
+                    <div class="widget-icon">
+                        <div class="icon" data-color="#00eccf">
+                            <i class="icon-copy dw dw-24-hours"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
+        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
+            <div class="card-box height-100-p widget-style3">
+                <div class="d-flex flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                round(
+                                    \common\models\Paid::find()
+                                        ->where(['status'=>1])
+                                        ->andFilterWhere(['like','date',date('Y-')])
+                                        ->sum('price')
+                                    ,0
+
+                                ),0,'.',' ')
+                            ?> so'm</div>
+                        <div class="font-14 text-secondary weight-500">
+                            Yillik tushum
+                        </div>
+                    </div>
+                    <div class="widget-icon">
+                        <div class="icon" data-color="#00eccf">
+                            <i class="icon-copy dw dw-24-hours"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xl-3 col-lg-3 col-md-6 mb-20">
+        <a href="<?= Yii::$app->urlManager->createUrl(['/cp/paid/','PaidSearch[period_start]'=>date('Y-m-d'),'PaidSearch[period_end]'=>date('Y-m-t')])?>">
+            <div class="card-box height-100-p widget-style3">
+                <div class="d-flex flex-wrap">
+                    <div class="widget-data">
+                        <div class="weight-700 font-24 text-dark">
+                            <?= number_format(
+                                round(
+                                    \common\models\Client::find()
+                                        ->where(['status'=>1])
+                                        ->andWhere(['<','balance',0])
+                                        ->sum('balance')
+                                    ,0
+
+                                ),0,'.',' ')
+                            ?> so'm</div>
+                        <div class="font-14 text-secondary weight-500">
+                            Barcha qarzdorliklar
+                        </div>
+                    </div>
+                    <div class="widget-icon">
+                        <div class="icon" data-color="#00eccf">
+                            <i class="icon-copy dw dw-24-hours"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
     </div>
 </div>
 
+<?php if(false){?>
 <div class="row pb-10">
     <div class="col-md-8 mb-20">
         <div class="card-box height-100-p pd-20">
@@ -171,6 +319,7 @@ if($cnt > 0){?>
         </div>
     </div>
 </div>
+<?php }?>
 
 <div class="row pb-10">
     <div class="col-md-12 mb-20">
@@ -188,42 +337,12 @@ if($cnt > 0){?>
 
 </div>
 
-<div class="row pb-10">
-    <div class="col-md-12 mb-20">
-        <div class="card-box height-100-p pd-20">
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-0 pb-md-3">
-                <div class="h5 mb-md-0">Kunlik tushumlar</div>
-            </div>
-
-
-            <div id="chart-monthly"></div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<div class="row pb-10">
-    <div class="col-md-12 mb-20">
-        <div class="card-box height-100-p pd-20">
-            <div class="d-flex flex-wrap justify-content-between align-items-center pb-0 pb-md-3">
-                <div class="h5 mb-md-0">Bu oyda eng ko'p sotilgan mahsulotlar</div>
-            </div>
-
-
-            <div id="chart-topproduct"></div>
-
-        </div>
-
-    </div>
-</div>
 <?php
 
 $dailyUrl = Yii::$app->urlManager->createUrl(['/cp/default/daily']);
 $this->registerJs("    
 
-    var months = " . json_encode(\common\models\Paid::getMonths()) . ";
+    var months = " . json_encode(Yii::$app->params['month']) . ";
     var currentView = 'yearly';
 
     var options = {
@@ -245,7 +364,7 @@ $this->registerJs("
             data: " . json_encode(\common\models\Paid::getYearlyData($year)) . "
         }],
         xaxis: {
-            categories: " . json_encode(\common\models\Paid::getMonths()) . "
+            categories: " . json_encode(Yii::$app->params['month']) . "
         },
         yaxis: {
             title: {
@@ -278,113 +397,3 @@ $this->registerJs("
 ");
 ?>
 
-
-<?php
-$this->registerJs("    
-    var options3 = {
-        chart: {
-            type: 'line',
-            height: 350,
-            toolbar: {
-                show: false
-            },
-        },
-        series: [{
-            name: 'Sotilgan mahsulotlar',
-            data: " . json_encode(\common\models\Paid::getTopProductsData()) . "
-        }],
-        xaxis: {
-            type: 'TOP 20'
-        },
-        dataLabels: {
-            enabled: true,
-            formatter: function (val) {
-                return numberFormat(val);
-            }
-        },
-         tooltip: {
-            y: {
-                formatter: function (val) {
-                    return numberFormat(val) + ' so`m';
-                }
-            }
-        }
-    };
-
-    function numberFormat(x) {
-        return x.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ' ');
-    }
-
-    var chart3 = new ApexCharts(document.querySelector('#chart-monthly'), options3);
-    chart3.render();
-    
-    
-    loadDaily({$month_number});
-    
-    
-    function loadDaily(month) {
-    fetch('$dailyUrl?year={$year}&month=' + month)
-        .then(res => res.json())
-        .then(data => {
-            chart3.updateOptions({
-                series: [{ name: 'Kunlik', data: data }],
-                xaxis: { type: 'datetime' },
-                title: { text: months[month - 1] + ' {$year} kunlik statistika' }
-            });
-            currentView = 'daily';
-            document.getElementById('backBtn').style.display = 'inline-block';
-        });
-}
-");
-?>
-
-<?php
-$this->registerJs("    
-    var options2 = {
-        chart: {
-            type: 'bar',
-            height: 350,
-            toolbar: {
-                show: false
-            },
-            events: {
-                dataPointSelection: function(event, chartContext, config) {
-                    var data = config.w.config.series[config.seriesIndex].data[config.dataPointIndex];
-                    if (data.t) {
-                        window.location.href = '/cp/goods/view?id=' + data.t;
-                    }
-                }
-            }
-        },
-        series: [{
-            name: 'Sotilgan mahsulotlar',
-            data: " . json_encode(\common\models\Paid::getTopProductsData()) . "
-        }],
-        xaxis: {
-            type: 'TOP 20'
-        },
-        dataLabels: {
-            enabled: true,
-            formatter: function (val) {
-                return numberFormat(val);
-            }
-        },
-        tooltip: {
-            y: {
-                formatter: function (val, opts) {
-                     var data = opts.w.config.series[opts.seriesIndex].data[opts.dataPointIndex];
-                    return numberFormat(val) + ' ' + data.f; // qiymat + unit
-                 
-                }
-            }
-        }
-    };
-
-    function numberFormat(x) {
-        return x.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ' ');
-    }
-
-    var chart2 = new ApexCharts(document.querySelector('#chart-topproduct'), options2);
-    chart2.render();
-");
-?>

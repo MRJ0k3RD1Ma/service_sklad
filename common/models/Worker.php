@@ -39,7 +39,7 @@ class Worker extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name','phone'], 'required'],
             [['description'], 'string'],
             [['status', 'register_id', 'modify_id'], 'integer'],
             [['created', 'updated'], 'safe'],

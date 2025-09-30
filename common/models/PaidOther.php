@@ -40,6 +40,7 @@ class PaidOther extends ActiveRecord
             [['description'], 'string'],
             [['paid_date', 'created', 'updated'], 'safe'],
             [['price'], 'number'],
+            [['group_id','payment_id','paid_date','type','price'],'required'],
             [['type'], 'in', 'range' => ['INCOME', 'OUTCOME']],
             [['group_id'], 'exist', 'skipOnError' => true, 'targetClass' => PaidOtherGroup::class, 'targetAttribute' => ['group_id' => 'id']],
             [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::class, 'targetAttribute' => ['payment_id' => 'id']],
