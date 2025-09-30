@@ -4,6 +4,7 @@ namespace frontend\modules\cp\controllers;
 
 use common\models\PaidWorker;
 use common\models\search\PaidWorkerSearch;
+use frontend\components\Common;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -74,6 +75,7 @@ class PaidWorkerController extends Controller
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
                 if($model->save()){
+                    Common::calcPriceWorker($model->worker_id);
                     Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
                 }else{
                     Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
@@ -103,6 +105,8 @@ class PaidWorkerController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
              $model->modify_id = Yii::$app->user->id;
             if($model->save()){
+                Common::calcPriceWorker($model->worker_id);
+
                 Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
             }else{
                 Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
@@ -127,6 +131,8 @@ class PaidWorkerController extends Controller
         $model = $this->findModel($id);
         $model->status = -1;
         $model->save(false);
+        Common::calcPriceWorker($model->worker_id);
+
         return $this->redirect(['index']);
     }
 

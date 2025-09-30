@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
         <?= Html::button('<span class="fa fa-money"></span> To`lov qabul qilish', ['value'=>Yii::$app->urlManager->createUrl(['/cp/client/paying','id'=>$model->id]),'class' => 'btn btn-primary md-btnupdate'],) ?>
-
+        <?= Html::a('Shartnoma yaratish',Yii::$app->urlManager->createUrl(['/cp/sale/create','id'=>$model->id]),['class'=>'btn btn-success'])?>
     </p>
 
             <div class="row">

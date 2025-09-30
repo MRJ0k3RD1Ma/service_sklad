@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+        <?= Html::button('<span class="fa fa-money"></span> To`lov qilish',['class'=>'btn btn-primary md-btncreate','value'=>Yii::$app->urlManager->createUrl(['/cp/worker/paying','id'=>$model->id])])?>
     </p>
 
             <div class="row">
@@ -190,8 +191,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                             [
                                                 'label'=>'',
                                                 'value'=>function($d){
-                                                    $url_delete = Yii::$app->urlManager->createUrl(['/cp/client/deletepaying','id'=>$d->id]);
-                                                    $url_update = Yii::$app->urlManager->createUrl(['/cp/client/updatepaying','id'=>$d->id]);
+                                                    $url_delete = Yii::$app->urlManager->createUrl(['/cp/worker/deletepaying','id'=>$d->id]);
+                                                    $url_update = Yii::$app->urlManager->createUrl(['/cp/worker/updatepaying','id'=>$d->id]);
                                                     return "
                                                         <button class='btn btn-primary md-btnupdate' value='{$url_update}'><span class='fa fa-edit'></span></button>
                                                         <a href='{$url_delete}' class='btn btn-danger' data-method='post' data-confirm='Siz rostdan ham ushbu elementni o`chirmoqchimisiz?'><span class='fa fa-trash'></span></a>

@@ -53,6 +53,29 @@ class ClientController extends Controller
         ]);
     }
 
+    public function actionCredit()
+    {
+        $searchModel = new ClientSearch();
+        $searchModel->balanceType = 'credit';
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionDebt()
+    {
+        $searchModel = new ClientSearch();
+        $searchModel->balanceType = 'debt';
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single Client model.
      * @param int $id ID

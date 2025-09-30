@@ -2,12 +2,14 @@
 
 namespace frontend\modules\cp\controllers;
 
+use common\models\Paid;
 use common\models\PaidWorker;
 use common\models\search\PaidSearch;
 use common\models\search\PaidWorkerSearch;
 use common\models\search\SaleSearch;
 use common\models\Worker;
 use common\models\search\WorkerSearch;
+use frontend\components\Common;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -177,5 +179,54 @@ class WorkerController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionDeletepaying($id)
+    {
+        $model = PaidWorker::findOne($id);
+        if($model){
+            $model->status = -1;
+            $model->save(false);
+            Common::calcPriceWorker($model->worker_id);
+            Yii::$app->session->setFlash('success','Qo`shilgan to`lov o`chirildi');
+            return $this->redirect(['view', 'id' => $model->worker_id]);
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionUpdatepaying($id){
+        $model = PaidWorker::findOne($id);
+        if($model){
+            if($model->load($this->request->post())){
+                $model->modify_id = Yii::$app->user->id;
+                $model->save(false);
+                Common::calcPriceWorker($model->worker_id);
+                Yii::$app->session->setFlash('success','To`lov ma`lumotlarni o`zgartirildi');
+                return $this->redirect(['view', 'id' => $model->worker_id]);
+            }
+            return $this->renderAjax('_paying', [
+                'model'=>$model,
+            ]);
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionPaying($id)
+    {
+        $model = new PaidWorker();
+        $worker = $this->findModel($id);
+        $model->worker_id = $worker->id;
+        if($model->load($this->request->post())){
+            $model->modify_id = Yii::$app->user->id;
+            $model->register_id = Yii::$app->user->id;
+            $model->worker_id = $worker->id;
+            $model->save(false);
+            Common::calcPriceWorker($model->worker_id);
+            Yii::$app->session->setFlash('success','To`lov qabul qilindi');
+            return $this->redirect(['view', 'id' => $model->worker_id]);
+        }
+        return $this->renderAjax('_paying', [
+            'model'=>$model,
+        ]);
     }
 }

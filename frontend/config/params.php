@@ -23,6 +23,10 @@ return [
         'DONE'=>'YAKUNLANGAN',
         'CANCELLED'=>'BEKOR QILINGAN',
     ],
+    'paid-other.type'=>[
+        'INCOME'=>'KIRIM',
+        'OUTCOME'=>'CHIQIM'
+    ],
     'sale.log'=>[
         'text'=>[
             'NEW'=>'Shartnoma yaratildi',

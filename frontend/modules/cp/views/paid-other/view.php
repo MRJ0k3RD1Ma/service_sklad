@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\PaidOther $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Paid Others', 'url' => ['index']];
+$this->title = $model->paid_date;
+$this->params['breadcrumbs'][] = ['label' => 'Boshqa to`lovlar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="card-body">
             
     <p>
-        <?= Html::a('O`zgartirish', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::button('O`zgartirish', ['class' => 'btn btn-primary md-btnupdate','value'=>Yii::$app->urlManager->createUrl(['/cp/paid-other/update', 'id' => $model->id])]) ?>
         <?= Html::a('O`chirish', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -31,17 +31,27 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'type',
-            'group_id',
+//            'type',
+            [
+                'attribute'=>'type',
+                'value'=>function($d){
+                    return Yii::$app->params['paid-other.type'][$d->type];
+                },
+            ],
+            'group.name',
             'description:ntext',
             'paid_date',
-            'payment_id',
+            'payment.name',
             'price',
-            'status',
+//            'status',
+            [
+                'attribute'=>'status',
+                'value'=>function($d){return Yii::$app->params['status'][$d->status];},
+            ],
             'created',
             'updated',
-            'register_id',
-            'modify_id',
+            'register.name',
+            'modify.name',
         ],
     ]) ?>
 

@@ -71,10 +71,10 @@ class SaleController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
         $model = new Sale();
-
+        $model->client_id = $id;
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->state = 'NEW';
@@ -263,6 +263,7 @@ class SaleController extends Controller
         $model = $this->findModel($id);
         $model->status = -1;
         $model->save(false);
+        Common::calcPriceClient($id);
         return $this->redirect(['index']);
     }
 

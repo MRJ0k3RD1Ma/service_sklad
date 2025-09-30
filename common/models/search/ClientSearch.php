@@ -11,6 +11,7 @@ use common\models\Client;
  */
 class ClientSearch extends Client
 {
+    public $balanceType;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class ClientSearch extends Client
     {
         return [
             [['id', 'type_id', 'status', 'register_id', 'modify_id'], 'integer'],
-            [['image', 'name', 'phone', 'phone_two', 'comment', 'created', 'updated'], 'safe'],
+            [['image', 'name', 'phone', 'phone_two', 'comment','balanceType', 'created', 'updated'], 'safe'],
             [['balance'], 'number'],
         ];
     }
@@ -57,7 +58,12 @@ class ClientSearch extends Client
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        if($this->balanceType == 'credit'){
+            $query->where(['<','balance',0]);
+        }
+        if($this->balanceType == 'debt'){
+            $query->where(['>','balance',0]);
+        }
         if($this->status == null){
             $this->status = 1;
         }

@@ -40,6 +40,7 @@ class PaidWorker extends ActiveRecord
             [['worker_id', 'payment_id', 'status', 'register_id', 'modify_id', 'sale_id'], 'integer'],
             [['date', 'created', 'updated'], 'safe'],
             [['price'], 'number'],
+            [['price','worker_id','payment_id','date'],'required'],
             [['description'], 'string'],
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Worker::class, 'targetAttribute' => ['worker_id' => 'id']],
             [['payment_id'], 'exist', 'skipOnError' => true, 'targetClass' => Payment::class, 'targetAttribute' => ['payment_id' => 'id']],

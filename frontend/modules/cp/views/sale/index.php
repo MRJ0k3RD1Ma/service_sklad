@@ -85,14 +85,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter'=>Yii::$app->params['status']
             ],
-            //'created',
-            //'updated',
-            //'register_id',
-            //'modify_id',
-            //'status',
-            //'volume',
-            //'volume_estimated',
-            //'address',
         ],
     ]); ?>
 

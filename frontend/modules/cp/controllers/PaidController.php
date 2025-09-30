@@ -4,6 +4,7 @@ namespace frontend\modules\cp\controllers;
 
 use common\models\Paid;
 use common\models\search\PaidSearch;
+use frontend\components\Common;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -74,6 +75,7 @@ class PaidController extends Controller
                 $model->register_id = Yii::$app->user->id;
                 $model->modify_id = Yii::$app->user->id;
                 if($model->save()){
+                    Common::calcPriceClient($model->client_id);
                     Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
                 }else{
                     Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
@@ -103,6 +105,7 @@ class PaidController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
              $model->modify_id = Yii::$app->user->id;
             if($model->save()){
+                Common::calcPriceClient($model->client_id);
                 Yii::$app->session->setFlash('success','Ma`lumot muvoffaqiyatli saqlandi');
             }else{
                 Yii::$app->session->setFlash('error','Ma`lumotni saqlashda xatolik');
@@ -127,6 +130,7 @@ class PaidController extends Controller
         $model = $this->findModel($id);
         $model->status = -1;
         $model->save(false);
+        Common::calcPriceClient($model->client_id);
         return $this->redirect(['index']);
     }
 
