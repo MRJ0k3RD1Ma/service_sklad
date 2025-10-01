@@ -2,11 +2,17 @@
 
 namespace backend\controllers;
 
-use common\models\LoginForm;
+use backend\models\LoginForm;
+use backend\models\User;
+use common\models\Balans;
+use common\models\UserAttendance;
 use Yii;
+use yii\filters\ContentNegotiator;
+use yii\filters\Cors;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\HttpException;
 use yii\web\Response;
 
 /**
@@ -20,27 +26,17 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
+            'corsFilter'=>[
+                'class' => Cors::class,
             ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
+            'contentNegotiator' => [
+                'class' => ContentNegotiator::class,
+                'formats' => [
+                    'application/json' => Response::FORMAT_JSON,
                 ],
             ],
         ];
+
     }
 
     /**
@@ -54,51 +50,52 @@ class SiteController extends Controller
             ],
         ];
     }
-
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
-
-    /**
-     * Login action.
-     *
-     * @return string|Response
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+    public function getphone($phone){
+        $phone_new = "";
+        if(strlen($phone) < 9 ){
+            return false;
         }
+        for ($i=0; $i<strlen($phone);  $i++){
+            if('0'<=$phone[$i] and $phone[$i] <= '9'){
+                $phone_new.= $phone[$i];
+            }
+        }
+        if(strlen($phone_new) > 9){
+            if($phone_new[0]=='9' and $phone_new[1]=='9' and $phone_new[2]=='8'){
+                $phone_new = substr($phone_new,3,strlen($phone_new));
+            }else{
+                return false;
+            }
+        }
+//        (99)967-0395
 
-        $this->layout = 'blank';
+        return '('.substr($phone_new,0,2).')'.substr($phone_new,2,3).'-'.substr($phone_new,5,4);
+    }
+    public function actionLogin(){
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+        if ($model->load(Yii::$app->request->post(),'')) {
+            if($model->login()){
+
+                $user = Yii::$app->user->identity;
+
+                $token = Yii::$app->security->generateRandomString(64);
+
+                $user->access_token = $token;
+                $user->save(false);
+                return [
+                    'success'=>true,
+                    'token' => (string) $token,
+                    'user' => $user,
+                ];
+            }else{
+                return [$model->getFirstErrors()];
+            }
+        } else {
+            throw new HttpException(400, 'Bad request');
         }
-
-        $model->password = '';
-
-        return $this->render('login', [
-            'model' => $model,
-        ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
 
-        return $this->goHome();
-    }
 }

@@ -23,7 +23,8 @@
         "arturoliveira/yii2-excelview": "^1.0",
         "endroid/qr-code": "^4.6",
         "picqer/php-barcode-generator": "^2.4",
-        "kartik-v/yii2-mpdf": "^1.0"
+        "kartik-v/yii2-mpdf": "^1.0",
+        "sizeg/yii2-jwt": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
