@@ -165,7 +165,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach (\common\models\Paid::find()->where(['sale_id'=>$model->id])->where(['status'=>1])->orderBy(['id'=>SORT_DESC])->all() as $key=>$item):?>
+                                <?php foreach (\common\models\Paid::find()->where(['sale_id'=>$model->id,'status'=>1])->orderBy(['id'=>SORT_DESC])->all() as $key=>$item):?>
 
                                     <tr>
                                         <td><?= $key+1?></td>

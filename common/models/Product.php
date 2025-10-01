@@ -37,7 +37,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'md_service_sklad.product';
+        return 'product';
     }
 
     /**
