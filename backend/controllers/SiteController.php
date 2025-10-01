@@ -97,5 +97,15 @@ class SiteController extends Controller
         }
     }
 
+    public function actionLogout(){
+        $user = Yii::$app->user->identity;
+        $user->access_token = null;
+        $user->save(false);
+        Yii::$app->user->logout();
+        return [
+            'success'=>true,
+            'message'=>'User logged out',
+        ];
+    }
 
 }
