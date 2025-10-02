@@ -10,7 +10,7 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log',],
     'modules' => [],
     'components' => [
         'request' => [
@@ -22,6 +22,7 @@ return [
                 'application/json' => 'yii\web\JsonParser',
             ]
         ],
+
         'user' => [
             'class' => yii\web\User::class,
             'identityClass' => backend\models\User::class,
@@ -53,6 +54,13 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'auth'=>'site/login',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'user',
+                    'extraPatterns' => [
+                        'OPTIONS' => 'options',
+                    ],
+                ],
             ],
         ]
 
